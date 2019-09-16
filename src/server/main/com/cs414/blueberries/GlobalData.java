@@ -6,15 +6,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 
 
 public class GlobalData {
+
+    public static String PLAYERS_FILENAME = "./JSONfiles/Players.json";
+    public static String GAMES_FILENAME = "./JSONfiles/Games.json";
+
     public static HashMap<String, Player> players = new HashMap<>();
     public static ArrayList<Integer> games = new ArrayList<>();
 
@@ -24,10 +25,19 @@ public class GlobalData {
             Player [] playersArray = gson.fromJson(new FileReader(filename), Player[].class);
             for (Player player : playersArray)
                 players.put(player.getUserId(), player);
-
-        } catch (FileNotFoundException ignored) {
-
+        } catch (FileNotFoundException notIgnored) {
+            notIgnored.printStackTrace();
         }
+    }
 
+    public static void writePlayers(String filename){
+        Gson gson = new Gson();
+        try {
+            Writer fileWriter = new FileWriter(filename);
+            gson.toJson(GlobalData.players.values(), fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

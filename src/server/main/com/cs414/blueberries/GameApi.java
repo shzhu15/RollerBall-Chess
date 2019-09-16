@@ -1,6 +1,8 @@
 package com.cs414.blueberries;
 
 import static spark.Spark.*;
+
+import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,7 +17,7 @@ import spark.Filter;
 
 public class GameApi {
     public static void main(String[] args) {
-        GlobalData.readPlayers("./JSONfiles/Players.json");
+        GlobalData.readPlayers(GlobalData.PLAYERS_FILENAME);
         System.out.println(GlobalData.players);
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
@@ -23,6 +25,12 @@ public class GameApi {
         });
 
         get("/hello", (req, res) -> "Hello World");
+        post("/register", (req, res) -> {
+            Gson gson = new Gson();
+            Player player = gson.fromJson(req.body(), Player.class);
+            System.out.println("Registering new player: " + player.toString());
+            return player.register();
+        });
     }
 
 
