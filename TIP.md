@@ -46,3 +46,21 @@ account exists the account data is fetched and returned to the client with the f
      "userData" : {"active games" : [], "pending invites" : []}
  }
  ```
+
+# Saved File Descriptions
+Two files will be saved on the server, one for storing information about all registered users of the application, and another to save all games past and present.
+The files will be loaded when the server starts, and the files will be saved each time the Player or Game data is modified. 
+
+## Player file Specification
+Each player will contain:
+- Email
+- Username
+- Password
+- Array of Game IDs
+```
+   [
+       { "email" : "email@email.com", "userId" : "surprise123", "password" : "securePassword", "gameIDs" : [1,2,3]},
+       { "email" : "anotherexample@email.com", "userId" : "sohip97", "password" : "PaSsWoRd", "gameIDs" : [3,6,7]}
+   ]
+```
+
