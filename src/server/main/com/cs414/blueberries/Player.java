@@ -1,6 +1,8 @@
 package com.cs414.blueberries;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 public class Player {
     private String email;
     private String userId;
@@ -13,10 +15,24 @@ public class Player {
         this.userId = userId;
         this.password = password;
         this.gameIDs = gameIDs;
+        this.register();
+    }
+
+    public Player(String email, String userId, String password) {
+        this.email = email;
+        this.userId = userId;
+        this.password = password;
+        this.gameIDs = new ArrayList<Integer>();
+        this.register();
     }
 
 
-
+    public boolean register() {
+        if (GlobalData.players.containsKey(this.userId)) return false;
+        GlobalData.players.put(this.userId, this);
+        GlobalData.writePlayers(GlobalData.PLAYERS_FILENAME);
+        return true;
+    }
 
     @Override
     public String toString() {
