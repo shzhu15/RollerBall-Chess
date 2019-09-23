@@ -24,7 +24,7 @@ public class GlobalData {
         try  {
             Player [] playersArray = gson.fromJson(new FileReader(filename), Player[].class);
             for (Player player : playersArray)
-                players.put(player.getUserId(), player);
+                players.put(player.getEmail(), player);
         } catch (FileNotFoundException notIgnored) {
             notIgnored.printStackTrace();
         }

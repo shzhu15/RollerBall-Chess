@@ -42,8 +42,8 @@ account exists the account data is fetched and returned to the client with the f
      "email" : "email@email.com"
      "UserID" : "exampleUserID"
      "password" : "Example Password"
-     "success" : {boolean : "if false, reason for failure"} 
-     "userData" : {"active games" : [], "pending invites" : []}
+     "success" : boolean 
+     "activeGameIDs" : []
  }
  ```
 

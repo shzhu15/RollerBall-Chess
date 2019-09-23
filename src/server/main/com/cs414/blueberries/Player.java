@@ -1,5 +1,8 @@
 package com.cs414.blueberries;
 
+import org.json.simple.JSONObject;
+import spark.Request;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -34,6 +37,20 @@ public class Player {
         return true;
     }
 
+    public String buildLoginResponse(String password, JSONObject requestBody){
+        if (password.equals(this.password)){
+            requestBody.put("UserID", userId);
+            requestBody.put("success", true);
+            requestBody.put("activeGameIDs", gameIDs);
+
+        }
+        else{
+            requestBody.put("success", false);
+        }
+        return requestBody.toJSONString();
+    }
+
+
     @Override
     public String toString() {
         return "User email: " + this.email + ", UserId: " + this.userId;
@@ -45,4 +62,5 @@ public class Player {
     public String getUserId(){
         return userId;
     }
+    public String getEmail(){return email;}
 }
