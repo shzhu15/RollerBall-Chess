@@ -4,6 +4,7 @@ import static spark.Spark.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import jdk.nashorn.internal.objects.Global;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,8 +22,10 @@ import spark.Response;
 
 public class GameApi {
     public static void main(String[] args) {
+
         GlobalData.readPlayers(GlobalData.PLAYERS_FILENAME);
-        System.out.println(GlobalData.players);
+        GlobalData.readGames(GlobalData.GAMES_FILENAME);
+
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "GET");
@@ -44,7 +47,16 @@ public class GameApi {
 
             return null;
         });
-
+        post("/game", (req, res) -> {
+           System.out.println(req.body());
+           Gson gson = new Gson();
+           Game game = gson.fromJson(req.body(), Game.class);
+           if (game != null) {
+               GlobalData.games.put(game.getId(), game);
+               return "Board updated";
+           }
+           return "Board not found";
+        });
 
     }
 

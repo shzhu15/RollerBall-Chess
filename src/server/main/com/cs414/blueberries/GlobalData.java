@@ -17,7 +17,8 @@ public class GlobalData {
     public static String GAMES_FILENAME = "./JSONfiles/Games.json";
 
     public static HashMap<String, Player> players = new HashMap<>();
-    public static ArrayList<Integer> games = new ArrayList<>();
+    public static HashMap<Integer, Game> games = new HashMap<>();
+
 
     public static void readPlayers(String filename){
         Gson gson = new Gson();
@@ -35,6 +36,27 @@ public class GlobalData {
         try {
             Writer fileWriter = new FileWriter(filename);
             gson.toJson(GlobalData.players.values(), fileWriter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readGames(String filename){
+        Gson gson = new Gson();
+        try  {
+            Game[] gamesArray = gson.fromJson(new FileReader(filename), Game[].class);
+            for (Game game : gamesArray)
+                games.put(game.getId(), game);
+        } catch (FileNotFoundException notIgnored) {
+            notIgnored.printStackTrace();
+        }
+    }
+    public static void writeGames(String filename){
+        Gson gson = new Gson();
+        try {
+            Writer fileWriter = new FileWriter(filename);
+            gson.toJson(GlobalData.games.values(), fileWriter);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
