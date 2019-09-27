@@ -13,6 +13,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -32,12 +33,16 @@ public class GameApi {
         });
 
         get("/hello", (req, res) -> "Hello World");
+
+        // Register new player
         post("/register", (req, res) -> {
             Gson gson = new Gson();
             Player player = gson.fromJson(req.body(), Player.class);
             System.out.println("Registering new player: " + player.toString());
             return player.register();
         });
+
+        // Log in player
         post("/login", (req, res) -> {
             System.out.println(req.body());
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
@@ -47,6 +52,8 @@ public class GameApi {
 
             return null;
         });
+
+        // Send an updated board
         post("/game", (req, res) -> {
            System.out.println(req.body());
            Gson gson = new Gson();
@@ -56,6 +63,45 @@ public class GameApi {
                return "Board updated";
            }
            return "Board not found";
+        });
+
+        // Get all games that a player is a part of
+        get("/game", (req, res) -> {
+            Gson gson = new Gson();
+            System.out.println(req.body());
+            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
+
+            HashMap<String, ArrayList<Game>> gamesMap = new HashMap<>();
+
+            gamesMap.put("sent", new ArrayList<>());
+            gamesMap.put("pending", new ArrayList<>());
+            gamesMap.put("active", new ArrayList<>());
+
+            GlobalData.games.forEach((id, game) -> {
+                if (!game.ready) {
+                    if (game.getP1().equals(body.get("email"))) gamesMap.get("sent").add(game);
+                    if (game.getP2().equals(body.get("email"))) gamesMap.get("pending").add(game);
+                }
+                else {
+                    gamesMap.get("active").add(game);
+                }
+            });
+            return gson.toJson(gamesMap);
+        });
+
+        post("/acceptInvite", (req, res) -> {
+            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
+            GlobalData.games.get(Integer.parseInt((String) body.get("id"))).ready = true;
+            return "Invite accepted";
+        });
+
+        post("/sendInvite", (req, res) -> {
+           System.out.println(req.body());
+           JSONObject body = (JSONObject) new JSONParser().parse(req.body());
+           Game game = new Game((String) body.get("p1"), (String) body.get("p2"));
+           GlobalData.games.put(game.getId(), game);
+           GlobalData.writeGames(GlobalData.GAMES_FILENAME);
+           return "Game created: " + game.toString();
         });
 
     }

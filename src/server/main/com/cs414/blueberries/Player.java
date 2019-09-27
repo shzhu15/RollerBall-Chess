@@ -1,5 +1,6 @@
 package com.cs414.blueberries;
 
+import jdk.nashorn.internal.objects.Global;
 import org.json.simple.JSONObject;
 import spark.Request;
 
@@ -48,6 +49,25 @@ public class Player {
             requestBody.put("success", false);
         }
         return requestBody.toJSONString();
+    }
+
+    public boolean sendInvite (String senderId, String recipientId) {
+        Game game = new Game(senderId, recipientId);
+        GlobalData.games.put(game.getId(), game);
+        Player p1 = GlobalData.players.get(senderId);
+        Player p2 = GlobalData.players.get(recipientId);
+        p1.getGameIDs().add(game.getId());
+        p2.getGameIDs().add(game.getId());
+        return true;
+    }
+
+    public boolean acceptInvite (String senderId, String recipientId, int gameId) {
+        Game game = GlobalData.games.get(gameId);
+        if(!game.ready) { // This means that the invite hasn't been accepted and that the game isn't ready
+            game.ready = true;
+            return true;
+        }
+        return false;
     }
 
 
