@@ -23,5 +23,16 @@ Major action items, implementation decisions and details of discussion from Scru
 - We will implement game logic during this sprint
 - UI will remain as simple as possible during this sprint
   - Nothing more than a few text boxes, buttons and plain text
+  
+  ## 9/23/2019
+### Implementation Decisions: 
+- None
+### Major Action Items:
+- Robbie and Dan will continue to implement game logic for the pieces
+- Start making slides for the in class presentation
+- Begin gathering deliverables for sprint 1
+- Finish up the login and registration on client side. Make sure that both are functioning properly. 
+### Schedule Decisions
+- Simple game logic will be the last added functionality to the application for this sprint
 
 
