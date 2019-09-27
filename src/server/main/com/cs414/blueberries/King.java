@@ -9,7 +9,6 @@ public class King extends Piece {
 
     @Override
     public void updateMoves() {
-        return;
     }
 
     public boolean isCheck(){
