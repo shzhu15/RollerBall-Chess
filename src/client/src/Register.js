@@ -35,7 +35,12 @@ class Register extends Component {
         if (!this.state.password) {
             return this.setState({ error: '  Password is required' });
         }
-        request('http://localhost:4567/login', function (error, response, body) {
+        const rqt = {
+            "email" : this.state.email,
+            "UserID" : this.state.username,
+            "password" : this.state.password
+        };
+        request.post('http://localhost:4567/register', rqt, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', body);
@@ -101,7 +106,7 @@ class Register extends Component {
                     <br />
                     <br />
 
-                    <button type="submit" value="Register" data-test="submit" />
+                    <button type="submit" value="Register" data-test="submit" variant="primary">Register</button>
                 </form>
 
             </div>

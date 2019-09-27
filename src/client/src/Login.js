@@ -3,8 +3,8 @@ import App from "./App";
 import request from "request";
 import Register from "./Register"
 // import Button from 'react-bootstrap/Button';
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+// import { Link } from 'react-router';
 
 class Login extends Component {
     constructor() {
@@ -21,6 +21,7 @@ class Login extends Component {
         this.dismissError = this.dismissError.bind(this);
     }
 
+
     dismissError() {
         this.setState({ error: '' });
     }
@@ -35,12 +36,17 @@ class Login extends Component {
         if (!this.state.password) {
             return this.setState({ error: '  Password is required' });
         }
-        request('http://localhost:4567/login', function (error, response, body) {
+        const rqt = {
+            'email': this.state.email,
+            'password': this.state.password
+        };
+
+        request.post('http://localhost:4567/login', rqt, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', body);
         });
-        // request('http://localhost:4567/login', function (error, response, body)).then((response) => {
+        // request('http://localhost:4567/login', rqt,function (error, response, body)).then((response) => {
         //         console.log('error:', error);
         //         console.log('statusCode:', response && response.statusCode);
         //         console.log('body:', body);
@@ -63,6 +69,7 @@ class Login extends Component {
             password: event.target.value,
         });
     }
+
 
     render() {
         return (
@@ -100,7 +107,12 @@ class Login extends Component {
                 </form>
                 <br />
                 <br />
-                <button onClick={<Register/>} variant="primary">Register</button>
+                <Router>
+                    <div>
+                        <Route path="/register" component={Register} />
+                        <Link to={"/Register"} className="btn btn-link">register</Link>
+                    </div>
+                </Router>
 
             </div>
         );
