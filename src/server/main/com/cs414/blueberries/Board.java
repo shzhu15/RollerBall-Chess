@@ -1,64 +1,67 @@
 package com.cs414.blueberries;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class Board {
+
+    // If the opposing king gets here its game over
     private final Point WHITE_STARTING_LOCATION = new Point(3,1);
     private final Point BLACK_STARTING_LOCATION = new Point(3,5);
-
-    private Piece[][] currentGrid;
-
+    private ArrayList<Piece> pieces;
 
     public Board(){
-        currentGrid = new Piece[7][7];
-        // Set Center 3x3 To Invalid
-        for(int i = 2; i < 5; i++){
-            for(int j = 2; j < 5; j++){
-                currentGrid[i][j] = new InvalidSpace(new Point(i, j), this);
-            }
-        }
-        //Set Sides To Blank
-        for(int i = 0; i < 7; i++){
-            for(int j = 0; j < 7; j++){
-                if(i == 2 || i == 3 || i == 4){
-                    continue;
-                }
-                currentGrid[i][j] = new BlankSpace(new Point(i, j), this);
-            }
-        }
-        //TODO:Add Pieces To Starting Board
-        /*Place Pieces: Starting Board Should Look like:
-        Rook, Bishop, Pawn
-        Rook, King, Pawn
-        xxxxxxxxxxxxxxxxxx
-        Pawn, King, Rook
-        Pawn, Bishop, Rook
-        */
-
+        this.pieces = new ArrayList<Piece>();
+        pieces.add(new King(PieceColor.WHITE, WHITE_STARTING_LOCATION, this));
+        pieces.add(new King(PieceColor.BLACK, BLACK_STARTING_LOCATION, this));
     }
 
-    public boolean movePiece(Piece p, Point newPosition){
-        Point oldPosition = p.getLocation();
-        this.currentGrid[newPosition.x][newPosition.y] = p;
+    //This should be called by the api whenever a player tries to make a move
+    public boolean movePiece(Piece piece, Point newPosition){
+        if(piece.move(newPosition)){
+            Piece pieceInSpace = this.getPieceAtPoint(newPosition);
+            if(pieceInSpace != null){
+                pieces.remove(pieceInSpace);
+            }
+            return true;
+        }
+        return false;
+    }
 
-        return true;
+    public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
+    public ArrayList<Piece> getPieces(PieceColor color){
+        ArrayList<Piece> ret = new ArrayList<Piece>();
+        for(int i = 0; i < this.pieces.size(); i++){
+            if(this.pieces.get(i).getPieceColor().equals(color)){
+                ret.add(this.pieces.get(i));
+            }
+        }
+        return ret;
     }
 
     public Piece getPieceAtPoint(Point p){
-        return currentGrid[p.x][p.y];
+        for(int i = 0; i < this.pieces.size(); i++){
+            if(pieces.get(i).getLocation().equals(p)){
+                return pieces.get(i);
+            }
+        }
+        return null;
     }
 
-    public Piece getPieceAtPoint(int x, int y){
-        return currentGrid[x][y];
+    public HashSet<Point> getAllMovesOfColor(PieceColor color){
+        HashSet<Point> ret = new HashSet<>();
+        ArrayList<Piece> temp = this.getPieces(color);
+        for(int i = 0; i < temp.size(); i++){
+            HashSet<Point> moves = temp.get(i).getPossibleMoves();
+            for(Point move : moves){
+                ret.add(move);
+            }
+        }
+        return ret;
     }
 
-    //TODO: Implement These
-    //Takes a player color as input and returns a bool
-    public boolean isCheck(PieceColor checkedSide){
-        return false;
-    }
-
-    public boolean isCheckmate(PieceColor checkedSide){
-        return false;
-    }
 }
