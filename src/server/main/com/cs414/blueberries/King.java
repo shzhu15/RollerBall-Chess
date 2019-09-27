@@ -1,6 +1,5 @@
 package com.cs414.blueberries;
 import java.awt.*;
-import java.util.HashSet;
 
 public class King extends Piece {
 
