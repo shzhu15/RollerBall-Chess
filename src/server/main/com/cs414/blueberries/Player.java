@@ -31,8 +31,8 @@ public class Player {
 
 
     public boolean register() {
-        if (GlobalData.players.containsKey(this.userId)) return false;
-        GlobalData.players.put(this.userId, this);
+        if (GlobalData.players.containsKey(this.email)) return false;
+        GlobalData.players.put(this.email, this);
         GlobalData.writePlayers(GlobalData.PLAYERS_FILENAME);
         return true;
     }
