@@ -8,6 +8,6 @@ public class Pawn extends Piece{
 
     @Override
     public void updateMoves() {
-        return;
+
     }
 }
