@@ -1,4 +1,1 @@
-[
-    { "email" : "email@email.com", "userId" : "surprise123", "password" : "securePassword", "gameIDs" : [1,2,3]},
-    { "email" : "anotherexample@email.com", "userId" : "sohip97", "password" : "PaSsWoRd", "gameIDs" : [3,6,7]}
-]
+[{"email":"email","userId":"id","password":"password","gameIDs":[1]},{"email":"email@email.com","userId":"userID","password":"secure","gameIDs":[]}]

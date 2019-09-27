@@ -13,7 +13,7 @@ public class TestGlobalData{
     @Test
     public void test1(){
         GlobalData.readPlayers("./TestFiles/TestPlayers.json");
-        Player hippy = GlobalData.players.get("hippy123");
+        Player hippy = GlobalData.players.get("email@email.com");
         ArrayList<Integer> expectedGameIDsHippy = new ArrayList<>();
         expectedGameIDsHippy.add(1);
         expectedGameIDsHippy.add(2);
