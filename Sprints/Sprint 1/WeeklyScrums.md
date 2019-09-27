@@ -24,7 +24,7 @@ Major action items, implementation decisions and details of discussion from Scru
 - UI will remain as simple as possible during this sprint
   - Nothing more than a few text boxes, buttons and plain text
   
-  ## 9/23/2019
+## 9/23/2019
 ### Implementation Decisions: 
 - None
 ### Major Action Items:
