@@ -3,6 +3,7 @@ package com.cs414.blueberries;
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import jdk.nashorn.internal.objects.Global;
 import org.json.simple.JSONArray;
@@ -10,6 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -102,6 +104,28 @@ public class GameApi {
            GlobalData.games.put(game.getId(), game);
            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
            return "Game created: " + game.toString();
+        });
+
+        post("/move/:oldX/:oldY/:newX/:newY", (req, res) -> {
+            Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceDeserializer()).create();
+            Game game = gson.fromJson(req.body(), Game.class);
+            if(game != null){
+                Game serverInstanceOfGameObject = GlobalData.games.get(game.getId());
+                // Gets the piece by parsing the req parameters. Assumes Integer
+                Point oldPosition = new Point(Integer.parseInt(req.params(":oldX")), Integer.parseInt(req.params(":oldY")));
+                Point newPosition = new Point(Integer.parseInt(req.params(":newX")), Integer.parseInt(req.params(":newY")));
+                Piece piece = serverInstanceOfGameObject.getBoard().getPieceAtPoint(oldPosition);
+                if(piece.equals(null)){
+                    return "No peice at position " + req.params(":oldX") + ", " + req.params(":oldY");
+                }
+                boolean response = serverInstanceOfGameObject.getBoard().movePiece(piece, newPosition);
+                if(!response){
+                    System.out.println("Not a valid move");
+                    return gson.toJson("Piece Not Moved");
+                }
+            }
+            // System.out.println(GlobalData.games.get(game.getId()));
+            return "Piece Moved";
         });
 
     }

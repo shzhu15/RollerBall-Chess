@@ -1,5 +1,6 @@
 package com.cs414.blueberries;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.util.ArrayUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -43,7 +44,7 @@ public class GlobalData {
     }
 
     public static void readGames(String filename){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceDeserializer()).create();
         try  {
             Game[] gamesArray = gson.fromJson(new FileReader(filename), Game[].class);
             for (Game game : gamesArray)
