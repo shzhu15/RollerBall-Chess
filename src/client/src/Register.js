@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import App from "./App";
 import request from "request";
+import { Link, withRouter } from "react-router-dom";
+import {history} from "./History";
+
 
 class Register extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             username: '',
@@ -38,12 +40,22 @@ class Register extends Component {
         const rqt = {
             "email" : this.state.email,
             "UserID" : this.state.username,
-            "password" : this.state.password
+            "password" : this.state.password,
         };
-        request.post('http://localhost:4567/register', rqt, function (error, response, body) {
+        let options = {
+            method: "POST",
+            uri : "http://localhost:4567/register",
+            body: JSON.stringify(rqt),
+            insecure: true,
+        };
+        request.post(options, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', body);
+            if(body === 'true') {
+                console.log('signed up');
+                history.push('/Login');
+            }
         });
         return this.setState({ error: '' });
     }
@@ -56,7 +68,7 @@ class Register extends Component {
 
     handleUserChange(event) {
         this.setState({
-            password: event.target.value,
+            username: event.target.value,
         });
     }
 
@@ -73,7 +85,7 @@ class Register extends Component {
 
                     {
                         this.state.error &&
-                        <h3 data-test="error" onClick={this.dismissError}>
+                        <h3 data-test="error" onClick={this.dismissError} style={{ color: 'red' }}>
                             <button onClick={this.dismissError}>✖</button>
                             {this.state.error}
                         </h3>
@@ -93,7 +105,7 @@ class Register extends Component {
                     <label style={{textAlignVertical: "center", textAlign: "center", fontSize: 20 }}>
                         Username
                         <br />
-                        <input type="Username" data="Username"
+                        <input type="text" data="username"
                                value={this.state.username} onChange={this.handleUserChange} />
                     </label>
                     <br />
@@ -105,12 +117,13 @@ class Register extends Component {
                     </label>
                     <br />
                     <br />
-
                     <button type="submit" value="Register" data-test="submit" variant="primary">Register</button>
+                    <br />
+                    <br />
+                    <Link to="/">Back</Link>
                 </form>
-
             </div>
         );
     }
 }
-export default Register;
+export default withRouter(Register);

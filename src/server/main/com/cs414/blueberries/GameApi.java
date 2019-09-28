@@ -26,10 +26,17 @@ public class GameApi {
         GlobalData.readPlayers(GlobalData.PLAYERS_FILENAME);
         GlobalData.readGames(GlobalData.GAMES_FILENAME);
 
-        after((Filter) (request, response) -> {
+        before((request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Methods", "GET");
+            response.header("Access-Control-Request-Method", "*");
+            response.header("Access-Control-Allow-Headers", "*");
+
         });
+//        after((Filter) (request, response) -> {
+//            response.header("Access-Control-Allow-Origin", "*");
+//            response.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
+//            response.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+//        });
 
         get("/hello", (req, res) -> "Hello World");
         post("/register", (req, res) -> {
@@ -42,10 +49,10 @@ public class GameApi {
             System.out.println(req.body());
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
             Player player = GlobalData.players.get(body.get("email"));
-            if (player != null)
+            if (player != null) {
                 return player.buildLoginResponse((String) body.get("password"), body);
-
-            return null;
+            }
+            return "fail";
         });
         post("/game", (req, res) -> {
            System.out.println(req.body());
