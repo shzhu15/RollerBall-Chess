@@ -32,28 +32,14 @@ export default class App extends Component {
     }
 
     render() {
-        // const renderMergedProps = (component, ...rest) => {
-        //     const finalProps = Object.assign({}, ...rest);
-        //     return (
-        //         React.createElement(component, finalProps)
-        //     );
-        // }
-        //
-        // const PropsRoute = ({ component, ...rest }) => {
-        //     return (
-        //         <Route {...rest} render={routeProps => {
-        //             return renderMergedProps(component, routeProps, rest);
-        //         }}/>
-        //     );
-        // }
         return (
             <div>
                 <Router history={history}>
                     <Switch>
                         <Redirect exact from="/" to="/Login" />
-                        <Route path="/Login" render={(props) => <Login {...props} updateUser={this.updateUser}/>} />
+                        <Route path="/Login" component={Login}/>
                         <Route path="/Register" component={Register}/>
-                        <PrivateRoute exact path="/Home" render={(props) => <Home {...props} updateUser={this.state.userID}/>}/>
+                        <PrivateRoute exact path="/Home" component={Home}/>
                     </Switch>
                 </Router>
                 <br/>

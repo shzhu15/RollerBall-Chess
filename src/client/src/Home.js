@@ -21,7 +21,7 @@ class Home extends Component {
                         Home
                     </p>
                 </header>
-                <h1>Hi {this.props.updateUser}!</h1>
+                <h1>Hi</h1>
             </div>
         );
     }
