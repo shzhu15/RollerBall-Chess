@@ -14,9 +14,9 @@ cd ../..
 
 #### 3. Make changes
 
-#### 4. Run the server and client with the following commands
+#### 4. Run the server and client with the following commands (also runs all tests)
 
 ```
 ./run_server.sh
 ./run_client.sh
-```
+
