@@ -19,7 +19,7 @@
   - Create API endpoint for sending and receiving game invites
   - Create UI for displaying pending games
  
-## As a user, I want to be able to play rollerball with my friends
+## As a user, I want to be able to play rollerball 
   - Create a game board
   - Associate each game board with 2 players
   - Create pieces, with each piece defining its own valid moves. 
