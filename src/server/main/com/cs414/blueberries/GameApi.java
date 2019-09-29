@@ -46,6 +46,7 @@ public class GameApi {
         // Register new player
         post("/register", (req, res) -> {
             Gson gson = new Gson();
+            System.out.println(req.body());
             Player player = gson.fromJson(req.body(), Player.class);
             System.out.println("Registering new player: " + player.toString());
             return player.register();

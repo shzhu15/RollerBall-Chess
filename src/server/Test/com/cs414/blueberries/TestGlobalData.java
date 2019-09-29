@@ -30,6 +30,16 @@ public class TestGlobalData{
         assert(GlobalData.players.isEmpty());
     }
 
+    @Test
+    public void testReadGames(){
+        GlobalData.readGames("./TestFiles/TestGames.json");
+        Game g1 = GlobalData.games.get(-2011447105);
+        String p1 = g1.getP1();
+        GlobalData.writeGames("./TestFiles/TestGames.json");
+        assertEquals("p1", p1);
+        GlobalData.games.clear();
+    }
+
     @After
     public void clearData(){
         GlobalData.players.clear();

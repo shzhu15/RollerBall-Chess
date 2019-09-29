@@ -24,11 +24,15 @@ public class GlobalData {
     public static void readPlayers(String filename){
         Gson gson = new Gson();
         try  {
-            Player [] playersArray = gson.fromJson(new FileReader(filename), Player[].class);
+            Reader reader = new FileReader(filename);
+            Player [] playersArray = gson.fromJson(reader, Player[].class);
             for (Player player : playersArray)
                 players.put(player.getEmail(), player);
+            reader.close();
         } catch (FileNotFoundException notIgnored) {
             notIgnored.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
