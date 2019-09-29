@@ -59,6 +59,7 @@ class Login extends Component {
                 // console.log("username: ");
                 // console.log(after.UserID);
                 localStorage.setItem("user", after.UserID);
+                localStorage.setItem("email", after.email);
                 self.props.updateUser(after.UserID);
                 history.push('/Home');
             }

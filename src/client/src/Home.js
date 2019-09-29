@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link, withRouter} from "react-router-dom";
+import request from 'request';
 
 class Home extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class Home extends Component {
             email: '',
             password: '',
             error: '',
+            games: '',
         };
 
         this.getUser = this.getUser.bind(this);
@@ -16,17 +18,32 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        this.getGames();
         this.getUser();
     }
-    //
-    // componentDidMount(prevProps) {
-    //     if(this.props !== prevProps) {
-    //
-    //     }
-    // }
 
     getUser() {
         this.setState({user: localStorage.getItem("user")});
+    }
+
+    getGames() {
+        const rqt = {
+            "email" : localStorage.getItem("email"),
+        };
+        let options = {
+            method: "GET",
+            uri : "http://localhost:4567/getGame",
+            body: JSON.stringify(rqt),
+            insecure: true,
+        };
+        const self = this;
+        request.post(options, function (error, response, body) {
+            console.log('error:', error);
+            console.log('statusCode:', response && response.statusCode);
+            console.log('body:', body);
+            console.log('Retrieved game');
+            self.setState({games: body});
+        });
     }
 
     render() {
@@ -43,6 +60,7 @@ class Home extends Component {
                     </p>
                 </header>
                 <h1>Hi {this.state.user}</h1>
+                <h5>{this.state.games}</h5>
             <form>
                 <br/>
                 <br/>

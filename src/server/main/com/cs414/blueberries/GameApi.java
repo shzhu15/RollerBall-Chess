@@ -75,7 +75,7 @@ public class GameApi {
         });
 
         // Get all games that a player is a part of
-        get("/game", (req, res) -> {
+        post("/getGame", (req, res) -> {
             Gson gson = new Gson();
             System.out.println(req.body());
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
@@ -95,6 +95,7 @@ public class GameApi {
                     gamesMap.get("active").add(game);
                 }
             });
+            System.out.println("Sending games for "+body.get("email"));
             return gson.toJson(gamesMap);
         });
 

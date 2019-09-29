@@ -39,7 +39,7 @@ class Register extends Component {
         }
         const rqt = {
             "email" : this.state.email,
-            "UserID" : this.state.username,
+            "userId" : this.state.username,
             "password" : this.state.password,
         };
         let options = {

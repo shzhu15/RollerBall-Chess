@@ -37,6 +37,7 @@ public class GlobalData {
         try {
             Writer fileWriter = new FileWriter(filename);
             gson.toJson(GlobalData.players.values(), fileWriter);
+            System.out.println("writing players file : " + filename);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -35,6 +35,7 @@ public class Player {
         if (GlobalData.players.containsKey(this.email)) return false;
         GlobalData.players.put(this.email, this);
         GlobalData.writePlayers(GlobalData.PLAYERS_FILENAME);
+        System.out.println("Players file updated");
         return true;
     }
 
