@@ -1,5 +1,11 @@
 package com.cs414.blueberries;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
 import java.awt.*;
+import java.lang.reflect.Type;
 import java.util.HashSet;
 
 enum PieceColor {
@@ -10,17 +16,15 @@ enum PieceType {
 }
 
 public abstract class Piece {
+    protected PieceType type;
     private PieceColor pieceColor;
     private Point location;
-    protected PieceType type;
-    protected Board board;
     protected HashSet<Point> possibleMoves;
 
-    protected Piece(PieceColor pieceColor, Point location, PieceType type, Board board){
+    protected Piece(PieceColor pieceColor, Point location, PieceType type){
         this.pieceColor = pieceColor;
         this.location = location;
         this.type = type;
-        this.board = board;
         this.possibleMoves = new HashSet<Point>();
     }
 
@@ -58,5 +62,13 @@ public abstract class Piece {
         return ret;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("[" +this.type + " " + this.getPieceColor() + " " + this.location + "]");
+        return builder.toString();
+    }
+
     abstract public void updateMoves();
 }
+

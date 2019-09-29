@@ -3,23 +3,23 @@ import java.awt.*;
 
 public class King extends Piece {
 
-    public King(PieceColor pieceColor, Point location, Board board){
-        super(pieceColor, location, PieceType.KING, board);
+    public King(PieceColor pieceColor, Point location){
+        super(pieceColor, location, PieceType.KING);
     }
 
     @Override
     public void updateMoves() {
     }
 
-    public boolean isCheck(){
+    public boolean isCheck(Board board){
         if(this.getPieceColor().equals(PieceColor.BLACK)){
-            if(this.board.getAllMovesOfColor(PieceColor.WHITE).contains(this.getLocation())){
+            if(board.getAllMovesOfColor(PieceColor.WHITE).contains(this.getLocation())){
                 return true;
             }
             return false;
         }
         else {
-            if(this.board.getAllMovesOfColor(PieceColor.BLACK).contains(this.getLocation())){
+            if(board.getAllMovesOfColor(PieceColor.BLACK).contains(this.getLocation())){
                 return true;
             }
             return false;

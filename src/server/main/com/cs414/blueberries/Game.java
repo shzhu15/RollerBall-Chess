@@ -7,11 +7,13 @@ public class Game {
     private String p1;
     private String p2;
     public boolean ready;
+    private Board board;
 
     public Game (String p1, String p2) {
         this.p1 = p1;
         this.p2 = p2;
         this.ready = false;
+        this.board = new Board();
 
         Random random = new Random();
         this.id = random.nextInt();
@@ -42,6 +44,9 @@ public class Game {
 
     @Override
     public String toString () {
-        return "Game Id: " + id + ", Status: " + ready + "\nPlayers: " + p1 + ", " + p2;
+        return "Game Id: " + id + ", Status: " + ready + "\nPlayers: " + p1 + ", "
+                + p2 + "\n" + this.board;
     }
+
+    public Board getBoard() {return this.board;}
 }
