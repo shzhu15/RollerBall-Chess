@@ -1,4 +1,4 @@
 [
-  { "email" : "email@email.com", "userId" : "hippy123", "password" : "securePassword", "gameIDs" : [1,2,3]},
-  { "email" : "anotherexample@email.com", "userId" : "hipster56", "password" : "PaSsWoRd", "gameIDs" : [3,6,7]}
+  { "email" : "email@email.com", "UserID" : "hippy123", "password" : "securePassword", "gameIDs" : [1,2,3]},
+  { "email" : "anotherexample@email.com", "UserID" : "hipster56", "password" : "PaSsWoRd", "gameIDs" : [3,6,7]}
 ]

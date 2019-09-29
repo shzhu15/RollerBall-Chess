@@ -9,14 +9,14 @@ import java.util.Map;
 
 public class Player {
     private String email;
-    private String userId;
+    private String UserID;
     private String password;
     private ArrayList<Integer> gameIDs;
 
 
     public Player(String email, String userId, String password, ArrayList gameIDs) {
         this.email = email;
-        this.userId = userId;
+        this.UserID = userId;
         this.password = password;
         this.gameIDs = gameIDs;
         this.register();
@@ -24,7 +24,7 @@ public class Player {
 
     public Player(String email, String userId, String password) {
         this.email = email;
-        this.userId = userId;
+        this.UserID = userId;
         this.password = password;
         this.gameIDs = new ArrayList<Integer>();
         this.register();
@@ -41,7 +41,7 @@ public class Player {
 
     public String buildLoginResponse(String password, JSONObject requestBody){
         if (password.equals(this.password)){
-            requestBody.put("UserID", userId);
+            requestBody.put("UserID", UserID);
             requestBody.put("success", true);
             requestBody.put("activeGameIDs", gameIDs);
 
@@ -74,14 +74,14 @@ public class Player {
 
     @Override
     public String toString() {
-        return "User email: " + this.email + ", UserId: " + this.userId;
+        return "User email: " + this.email + ", UserId: " + this.UserID;
     }
 
     public ArrayList getGameIDs(){
         return this.gameIDs;
     }
     public String getUserId(){
-        return userId;
+        return UserID;
     }
     public String getEmail(){return email;}
 }
