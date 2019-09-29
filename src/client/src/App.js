@@ -1,35 +1,23 @@
 import React, { Component } from 'react';
 import request from 'request';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Login from './Login';
+import Register from './Register';
+import Home from './Home';
+import {PrivateRoute} from './PrivateRoute';
+import { history } from './History';
 
-// function dummyApiCall() {
-//
-//     request('http://localhost:4567/hello', function (error, response, body) {
-//         console.log('error:', error);
-//         console.log('statusCode:', response && response.statusCode);
-//         console.log('body:', body);
-//     });
-// }
-//
-// function App() {
-//   return (
-//     <div>
-//       <header>
-//         <p>
-//             Here is a barebones setup that calls the "hello world" endpoint as long as you are running the java server (check the console)
-//             {dummyApiCall()}
-//         </p>
-//       </header>
-//         <Login/>
-//     </div>
-//
-//   );
-// }
+
+
 export default class App extends Component {
-    constructor() {
-        super();
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            userID: ""
+        };
 
+        this.updateUser = this.updateUser.bind(this);
+    }
     dummyApiCall() {
 
         request('http://localhost:4567/hello', function (error, response, body) {
@@ -39,16 +27,39 @@ export default class App extends Component {
         });
     }
 
+    updateUser(name) {
+        this.setState({userID: name});
+    }
+
     render() {
+        // const renderMergedProps = (component, ...rest) => {
+        //     const finalProps = Object.assign({}, ...rest);
+        //     return (
+        //         React.createElement(component, finalProps)
+        //     );
+        // }
+        //
+        // const PropsRoute = ({ component, ...rest }) => {
+        //     return (
+        //         <Route {...rest} render={routeProps => {
+        //             return renderMergedProps(component, routeProps, rest);
+        //         }}/>
+        //     );
+        // }
         return (
             <div>
-                <header>
-                    <p>
-                        Here is a barebones setup that calls the "hello world" endpoint as long as you are running the java server (check the console)
-                        {this.dummyApiCall()}
-                    </p>
-                </header>
-                <Login/>
+                <Router history={history}>
+                    <Switch>
+                        <Redirect exact from="/" to="/Login" />
+                        <Route path="/Login" render={(props) => <Login {...props} updateUser={this.updateUser}/>} />
+                        <Route path="/Register" component={Register}/>
+                        <PrivateRoute exact path="/Home" render={(props) => <Home {...props} updateUser={this.state.userID}/>}/>
+                    </Switch>
+                </Router>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
             </div>
 
         );

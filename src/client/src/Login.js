@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import App from "./App";
 import request from "request";
-import Register from "./Register"
-// import Button from 'react-bootstrap/Button';
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { history } from './History';
 
 
 class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
@@ -35,21 +33,36 @@ class Login extends Component {
         if (!this.state.password) {
             return this.setState({ error: '  Password is required' });
         }
-        request('http://localhost:4567/login', function (error, response, body) {
+        const rqt = {
+            'email': this.state.email,
+            'password': this.state.password
+        };
+        let options = {
+            method: "POST",
+            uri : "http://localhost:4567/login",
+            body: JSON.stringify(rqt),
+            insecure: true,
+            };
+        console.log(rqt);
+        request.post(options, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', body);
+            var after = JSON.parse(body);
+            if(after.success === true) {
+                console.log('pushing');
+                history.push('/Home');
+            }
+            if(after.body === 'fail') {
+                this.setState({ error: 'Wrong email or password' });
+            }
         });
-        // request('http://localhost:4567/login', function (error, response, body)).then((response) => {
-        //         console.log('error:', error);
-        //         console.log('statusCode:', response && response.statusCode);
-        //         console.log('body:', body);
-        //         if(response.body == "pass") {
-        //             <Login />
-        //         }
-        //     }
-        // );
-        return this.setState({ error: '' });
+        if(this.state.error === 'Wrong email or password' ) {
+            return this.setState({ error: '  Wrong email or password' });
+        }
+        else {
+            return this.setState({error: ''});
+        }
     }
 
     handleUserChange(event) {
@@ -63,6 +76,7 @@ class Login extends Component {
             password: event.target.value,
         });
     }
+
 
     render() {
         return (
@@ -97,13 +111,14 @@ class Login extends Component {
                     <br />
                     <br />
                     <button type="submit" value="Login" data-test="submit" variant="primary">login</button>
+                    <br />
+                    <br />
+                    <Link to="/Register">Register</Link>
                 </form>
-                <br />
-                <br />
-                <button onClick={<Register/>} variant="primary">Register</button>
+
 
             </div>
         );
     }
 }
-export default Login;
+export default withRouter(Login);
