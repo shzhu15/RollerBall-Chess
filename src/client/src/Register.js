@@ -48,6 +48,7 @@ class Register extends Component {
             body: JSON.stringify(rqt),
             insecure: true,
         };
+        const self = this;
         request.post(options, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
@@ -55,6 +56,9 @@ class Register extends Component {
             if(body === 'true') {
                 console.log('signed up');
                 history.push('/Login');
+            }
+            if(body === 'false') {
+                return self.setState({ error: ' username already taken' });
             }
         });
         return this.setState({ error: '' });

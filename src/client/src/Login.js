@@ -11,6 +11,7 @@ class Login extends Component {
             email: '',
             password: '',
             error: '',
+            temp: {},
         };
 
         this.handlePassChange = this.handlePassChange.bind(this);
@@ -44,25 +45,25 @@ class Login extends Component {
             insecure: true,
             };
         console.log(rqt);
+        const self = this;
         request.post(options, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', body);
+            if(body === "fail") {
+                return self.setState({error: '  Wrong email or password'});
+
+            }
             var after = JSON.parse(body);
             if(after.success === true) {
-                console.log('pushing');
+                // console.log("username: ");
+                // console.log(after.UserID);
+                localStorage.setItem("user", after.UserID);
+                self.props.updateUser(after.UserID);
                 history.push('/Home');
             }
-            if(after.body === 'fail') {
-                this.setState({ error: 'Wrong email or password' });
-            }
         });
-        if(this.state.error === 'Wrong email or password' ) {
-            return this.setState({ error: '  Wrong email or password' });
-        }
-        else {
-            return this.setState({error: ''});
-        }
+        return this.setState({error: ''});
     }
 
     handleUserChange(event) {
@@ -76,7 +77,6 @@ class Login extends Component {
             password: event.target.value,
         });
     }
-
 
     render() {
         return (

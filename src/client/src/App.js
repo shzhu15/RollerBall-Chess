@@ -13,9 +13,9 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userID: ""
+            userID: "example",
+            wasInitialized: false
         };
-
         this.updateUser = this.updateUser.bind(this);
     }
     dummyApiCall() {
@@ -31,15 +31,20 @@ export default class App extends Component {
         this.setState({userID: name});
     }
 
+    componentDidMount() {
+        localStorage.clear();
+    }
+
+
     render() {
         return (
             <div>
                 <Router history={history}>
                     <Switch>
                         <Redirect exact from="/" to="/Login" />
-                        <Route path="/Login" component={Login}/>
+                        <Route path="/Login" render={(props) => <Login {...props} updateUser={this.updateUser} user={this.state.userID} />}/>
                         <Route path="/Register" component={Register}/>
-                        <PrivateRoute exact path="/Home" component={Home}/>
+                        <PrivateRoute exact path="/Home" component={Home} wasInitialized={this.state.wasInitialized} user={this.state.userID}/>
                     </Switch>
                 </Router>
                 <br/>
