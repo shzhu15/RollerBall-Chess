@@ -1,8 +1,5 @@
 # Sprint 1 User Stories
-## As a developer, I want development to be as easy as possible
-  - Create a development guide
-  - Make tests run automatically
-  - Use package management tools such as maven and npm to make adding dependicies easy
+
   
 ## As a user, I want to be able to register for an account
   - Create UI for account creation
@@ -23,4 +20,9 @@
   - Create a game board
   - Associate each game board with 2 players
   - Create pieces, with each piece defining its own valid moves. 
+  
+## As a developer, I want development to be as easy as possible
+  - Create a development guide
+  - Make tests run automatically
+  - Use package management tools such as maven and npm to make adding dependicies easy
   
