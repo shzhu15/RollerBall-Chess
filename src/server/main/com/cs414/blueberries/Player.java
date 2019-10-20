@@ -74,7 +74,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "User email: " + this.email + ", UserId: " + this.UserID;
+        return "User email: " + this.email + ", UserID: " + this.UserID;
     }
 
     public ArrayList getGameIDs(){

@@ -15,7 +15,7 @@ public class TestPlayer {
         gameIDs.add(2);
         Player player = new Player("email@email.com", "userID", "secure", gameIDs );
         player.toString();
-        assertEquals(player.toString(), "User email: email@email.com, UserId: userID");
+        assertEquals(player.toString(), "User email: email@email.com, UserID: userID");
         assertEquals(player.getGameIDs(), gameIDs);
 
     }
@@ -25,7 +25,7 @@ public class TestPlayer {
         ArrayList<Integer> gameIDs = new ArrayList<>();
         Player player = new Player("email@email.com", "userID", "secure" );
         player.toString();
-        assertEquals(player.toString(), "User email: email@email.com, UserId: userID");
+        assertEquals(player.toString(), "User email: email@email.com, UserID: userID");
         assertEquals(player.getGameIDs(), gameIDs);
 
     }

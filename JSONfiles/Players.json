@@ -1,1 +1,1 @@
-[{"email":"email@email.com","UserID":"userID","password":"secure","gameIDs":[]},{"email":"email","UserID":"id","password":"password","gameIDs":[1]}]
+[{"email":"email@email.com","UserID":"userID","password":"secure","gameIDs":[]},{"email":"new@new.com","password":"hello"},{"email":"hello","UserID":"hello","password":"hello"},{"email":"newnew","password":"newnew"},{"email":"email","UserID":"id","password":"password","gameIDs":[1]}]
