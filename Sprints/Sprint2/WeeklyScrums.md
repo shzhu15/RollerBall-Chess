@@ -16,9 +16,18 @@ Major action items, implementation decisions and details of discussion from Scru
   - Smaller user stories were discussed and created
   
 ## 10/14/2019 - Sprint 2 officially begins
+ - Main topic of this meeting was creating new, smaller user stories. 
+ - 13 total user stories were created for the actions from Sprint 1, and 3 more user stories were created for additional actions from P2
+ - 7 total user stories will be tackled during this sprint. 
+ - Goal of Sprint 2 is to develop code that allows the user to see the board, move pieces, register and login and out of an account. 
 ### Implementation Decisions: 
-- Focus will be on getting a simple gui up and on verfiying the legailty of piece moves
+- Based on feedback from product owner, focus will be on getting a simple gui up and on verfiying the legailty of piece moves
 ### Major Action Items:
+### Administrative:
+  - Redo the traceability link matrix with our new user stories
+
+### Code Related:
+- Fix the bug that stores a newly registered users username as null. 
 - Jared implementing Bishop move legality
 - Dan implementing King move legality
 - Robbie implementing Rook move legality
@@ -28,4 +37,12 @@ Major action items, implementation decisions and details of discussion from Scru
   
 
 ## 10/23/2019
+### Implementation Decisions: 
+- Based on feedback from product owner, focus will be on getting a simple gui up and on verfiying the legailty of piece moves
+### Major Action Items:
+  - None
+### Administrative:
+  - Begin presentation slides for end of Sprint 2
 
+### Code Related:
+  - Unchanged from last sprint
