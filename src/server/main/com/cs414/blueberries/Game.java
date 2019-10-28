@@ -13,10 +13,12 @@ public class Game {
         this.p1 = p1;
         this.p2 = p2;
         this.ready = false;
-        this.board = new Board();
 
         Random random = new Random();
         this.id = random.nextInt();
+
+        this.board = new Board(this.id);
+        this.board.initialize();
     }
 
     public int getId () {

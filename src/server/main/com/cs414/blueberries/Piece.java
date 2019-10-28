@@ -20,13 +20,25 @@ public abstract class Piece {
     private PieceColor pieceColor;
     private Point location;
     protected HashSet<Point> possibleMoves;
+    protected transient Board board;
+
+    protected Piece(PieceColor pieceColor, Point location, PieceType type, Board board){
+        this.pieceColor = pieceColor;
+        this.location = location;
+        this.type = type;
+        this.possibleMoves = new HashSet<Point>();
+        this.board = board;
+    }
 
     protected Piece(PieceColor pieceColor, Point location, PieceType type){
         this.pieceColor = pieceColor;
         this.location = location;
         this.type = type;
         this.possibleMoves = new HashSet<Point>();
+        this.board = null;
     }
+
+    public void setBoard(Board board){this.board = board;}
 
     public Point getLocation() {
         return location;

@@ -128,6 +128,14 @@ Starts the current game (doens't have error checking currently)
 ```
 Returns success string
 
+##Move/oldX/oldY/newX/newY(POST)
+Moves the piece located at oldX/oldY to newX/newY. Doesn't currently check for all edgecases
+```
+{
+    "id": 12345678
+}
+```
+
 # Saved File Descriptions
 Two files will be saved on the server, one for storing information about all registered users of the application, and another to save all games past and present.
 The files will be loaded when the server starts, and the files will be saved each time the Player or Game data is modified. 

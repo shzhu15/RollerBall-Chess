@@ -116,10 +116,10 @@ public class GameApi {
         });
 
         post("/move/:oldX/:oldY/:newX/:newY", (req, res) -> {
-            Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceDeserializer()).create();
-            Game game = gson.fromJson(req.body(), Game.class);
-            if(game != null){
-                Game serverInstanceOfGameObject = GlobalData.games.get(game.getId());
+            Gson gson = new Gson();
+            GameIdDeserializer gameid = gson.fromJson(req.body(), GameIdDeserializer.class);
+            if(gameid != null){
+                Game serverInstanceOfGameObject = GlobalData.games.get(gameid.getId());
                 // Gets the piece by parsing the req parameters. Assumes Integer
                 Point oldPosition = new Point(Integer.parseInt(req.params(":oldX")), Integer.parseInt(req.params(":oldY")));
                 Point newPosition = new Point(Integer.parseInt(req.params(":newX")), Integer.parseInt(req.params(":newY")));

@@ -3,6 +3,10 @@ import java.awt.*;
 
 public class King extends Piece {
 
+    public King(PieceColor pieceColor, Point location, Board board){
+        super(pieceColor, location, PieceType.KING, board);
+    }
+
     public King(PieceColor pieceColor, Point location){
         super(pieceColor, location, PieceType.KING);
     }
