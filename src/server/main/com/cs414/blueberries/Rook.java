@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Rook extends Piece {
 
-    public Rook(PieceColor pieceColor, Point location){
-        super(pieceColor, location, PieceType.ROOK);
+    public Rook(PieceColor pieceColor, Point location, Board board){
+        super(pieceColor, location, PieceType.ROOK, board);
     }
 
     @Override

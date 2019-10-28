@@ -9,28 +9,31 @@ import java.util.HashSet;
 
 public class Board {
 
-    // If the opposing king gets here its game over
     // 0,0 Is Top Left
+    // If the opposing king gets here its game over
     private final Point WHITE_STARTING_LOCATION = new Point(3,5);
     private final Point BLACK_STARTING_LOCATION = new Point(3,1);
     private ArrayList<Piece> pieces;
 
     public Board(){
         this.pieces = new ArrayList<Piece>();
-        pieces.add(new King(PieceColor.BLACK, BLACK_STARTING_LOCATION));
-        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 0)));
-        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 1)));
-        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 0)));
-        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 1)));
-        pieces.add(new Bishop(PieceColor.BLACK, new Point(3, 1)));
+        this.initialize();
+    }
 
-        pieces.add(new King(PieceColor.WHITE, WHITE_STARTING_LOCATION));
-        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 5)));
-        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 6)));
-        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 5)));
-        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 6)));
-        pieces.add(new Bishop(PieceColor.WHITE, new Point(3, 6)));
+    private void initialize(){
+        pieces.add(new King(PieceColor.BLACK, BLACK_STARTING_LOCATION, this));
+        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 0), this));
+        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 1), this));
+        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 0), this));
+        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 1), this));
+        pieces.add(new Bishop(PieceColor.BLACK, new Point(3, 1), this));
 
+        pieces.add(new King(PieceColor.WHITE, WHITE_STARTING_LOCATION, this));
+        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 5), this));
+        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 6), this));
+        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 5), this));
+        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 6), this));
+        pieces.add(new Bishop(PieceColor.WHITE, new Point(3, 6), this));
     }
 
     //This should be called by the api whenever a player tries to make a move
