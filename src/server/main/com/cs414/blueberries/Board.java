@@ -9,28 +9,40 @@ import java.util.HashSet;
 
 public class Board {
 
-    // If the opposing king gets here its game over
     // 0,0 Is Top Left
-    private final Point WHITE_STARTING_LOCATION = new Point(3,5);
-    private final Point BLACK_STARTING_LOCATION = new Point(3,1);
+    // If the opposing king gets here its game over
+    private transient final Point WHITE_STARTING_LOCATION = new Point(3,5);
+    private transient final Point BLACK_STARTING_LOCATION = new Point(3,1);
     private ArrayList<Piece> pieces;
+    public transient int gameId;
 
-    public Board(){
+    public Board(int gameId){
+        this.gameId = gameId;
         this.pieces = new ArrayList<Piece>();
-        pieces.add(new King(PieceColor.BLACK, BLACK_STARTING_LOCATION));
-        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 0)));
-        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 1)));
-        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 0)));
-        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 1)));
-        pieces.add(new Bishop(PieceColor.BLACK, new Point(3, 1)));
 
-        pieces.add(new King(PieceColor.WHITE, WHITE_STARTING_LOCATION));
-        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 5)));
-        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 6)));
-        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 5)));
-        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 6)));
-        pieces.add(new Bishop(PieceColor.WHITE, new Point(3, 6)));
+    }
 
+    public void initialize(){
+        pieces.add(new King(PieceColor.BLACK, BLACK_STARTING_LOCATION, this));
+        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 0), this));
+        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 1), this));
+        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 0), this));
+        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 1), this));
+        pieces.add(new Bishop(PieceColor.BLACK, new Point(3, 1), this));
+
+        pieces.add(new King(PieceColor.WHITE, WHITE_STARTING_LOCATION, this));
+        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 5), this));
+        pieces.add(new Rook(PieceColor.WHITE, new Point(4, 6), this));
+        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 5), this));
+        pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 6), this));
+        pieces.add(new Bishop(PieceColor.WHITE, new Point(3, 6), this));
+    }
+
+    //This should be called whenever the board gets read in
+    public void setBoardReferenceOfPieces(){
+        for (Piece piece : this.pieces) {
+            piece.setBoard(this);
+        }
     }
 
     //This should be called by the api whenever a player tries to make a move
@@ -91,7 +103,7 @@ public class Board {
 
     public static void main(String[] args){
         Game b = new Game("p1", "p2");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceDeserializer()).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceSerializer()).create();
         String json = gson.toJson(b);
         System.out.println(json);
         System.out.println(gson.fromJson(json, Game.class));

@@ -1,15 +1,12 @@
 package com.cs414.blueberries;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.eclipse.jetty.util.ArrayUtil;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 
 public class GlobalData {
@@ -21,11 +18,11 @@ public class GlobalData {
     public static HashMap<Integer, Game> games = new HashMap<>();
 
 
-    public static void readPlayers(String filename){
+    public static void readPlayers(String filename) {
         Gson gson = new Gson();
-        try  {
+        try {
             Reader reader = new FileReader(filename);
-            Player [] playersArray = gson.fromJson(reader, Player[].class);
+            Player[] playersArray = gson.fromJson(reader, Player[].class);
             for (Player player : playersArray)
                 players.put(player.getEmail(), player);
             reader.close();
@@ -36,7 +33,7 @@ public class GlobalData {
         }
     }
 
-    public static void writePlayers(String filename){
+    public static void writePlayers(String filename) {
         Gson gson = new Gson();
         try {
             Writer fileWriter = new FileWriter(filename);
@@ -48,18 +45,21 @@ public class GlobalData {
         }
     }
 
-    public static void readGames(String filename){
-        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceDeserializer()).create();
-        try  {
+    public static void readGames(String filename) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceSerializer()).create();
+        try {
             Game[] gamesArray = gson.fromJson(new FileReader(filename), Game[].class);
-            for (Game game : gamesArray)
+            for (Game game : gamesArray) {
                 games.put(game.getId(), game);
+                games.get(game.getId()).getBoard().setBoardReferenceOfPieces();
+            }
         } catch (FileNotFoundException notIgnored) {
             notIgnored.printStackTrace();
         }
     }
-    public static void writeGames(String filename){
-        Gson gson = new Gson();
+
+    public static void writeGames(String filename) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceSerializer()).create();
         try {
             Writer fileWriter = new FileWriter(filename);
             gson.toJson(GlobalData.games.values(), fileWriter);

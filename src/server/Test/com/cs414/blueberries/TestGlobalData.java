@@ -33,7 +33,7 @@ public class TestGlobalData{
     @Test
     public void testReadGames(){
         GlobalData.readGames("./TestFiles/TestGames.json");
-        Game g1 = GlobalData.games.get(-2011447105);
+        Game g1 = GlobalData.games.get(-195438572);
         String p1 = g1.getP1();
         GlobalData.writeGames("./TestFiles/TestGames.json");
         assertEquals("p1", p1);
