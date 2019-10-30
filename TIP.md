@@ -1,3 +1,18 @@
+# Board Layout
+
+The board indexing is shown below. The x values are represented by the column headers and the y values by the row headers. 
+
+| |   0  |  1  |  2  |  3  |  4  |  5  |  6  |
+|-|------|-----|-----|-----|-----|-----|-----|
+|0|      |     |     |     |     |     |     | 
+|1|      |     |     |     |     |     |     |
+|2|      |     | x   | x   |  x  |     |     |
+|3|      |     |  x  | x   |  x  |     |     |
+|4|      |     |  x  | x   | x   |     |     |
+|5|      |     |     |     |     |     |     |
+|6|      |     |     |     |     |     |     |
+
+
 # API Descriptions
 This document describes the standard format of all API requests and responses. 
 To simplify interaction between client and server the JSON format is used. 
