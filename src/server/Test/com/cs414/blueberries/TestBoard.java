@@ -1,38 +1,75 @@
 package com.cs414.blueberries;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.awt.*;
 
 public class TestBoard {
 
     @Test
-    public void testGetPiece(){
+    public void testInitializeBlackPieces(){
         Board board = new Board(101);
         board.initialize();
         Piece piece = board.getPieceAtPoint(new Point(2,0));
-        assertTrue(piece instanceof Rook, "First Rook");
-        assertTrue(piece.getPieceColor() == PieceColor.BLACK, "First rook wrong color");
+        assertTrue("First Rook", piece instanceof Rook);
+        assertTrue("First rook wrong color", piece.getPieceColor() == PieceColor.BLACK);
 
-        Piece piece = board.getPieceAtPoint(new Point(2,1));
-        assertTrue(piece instanceof Rook, "2nd Rook");
-        assertTrue(piece.getPieceColor() == PieceColor.BLACK, "2nd Rook wrong color");
+        piece = board.getPieceAtPoint(new Point(2,1));
+        assertTrue("2nd Rook", piece instanceof Rook);
+        assertTrue("2nd Rook wrong color", piece.getPieceColor() == PieceColor.BLACK);
 
-        Piece piece = board.getPieceAtPoint(new Point(3,0));
-        assertTrue(piece instanceof Bishop, "Bishop");
-        assertTrue(piece.getPieceColor() == PieceColor.BLACK, "Bishop wrong color");
+        piece = board.getPieceAtPoint(new Point(3,0));
+        assertTrue("Bishop", piece instanceof Bishop);
+        assertTrue("Bishop wrong color", piece.getPieceColor() == PieceColor.BLACK);
 
-        Piece piece = board.getPieceAtPoint(new Point(3,1));
-        assertTrue(piece instanceof King, "King");
-        assertTrue(piece.getPieceColor() == PieceColor.BLACK, "King wrong color");
+        piece = board.getPieceAtPoint(new Point(3,1));
+        assertTrue("King", piece instanceof King);
+        assertTrue("King wrong color", piece.getPieceColor() == PieceColor.BLACK);
 
-        Piece piece = board.getPieceAtPoint(new Point(4,0));
-        assertTrue(piece instanceof Pawn, "Pawn 1");
-        assertTrue(piece.getPieceColor() == PieceColor.BLACK, "Pawn 1 wrong color");
+        piece = board.getPieceAtPoint(new Point(4,0));
+        assertTrue("Pawn 1", piece instanceof Pawn);
+        assertTrue("Pawn 1 wrong color", piece.getPieceColor() == PieceColor.BLACK);
 
-        Piece piece = board.getPieceAtPoint(new Point(4,1));
-        assertTrue(piece instanceof Pawn, "Pawn 2");
-        assertTrue(piece.getPieceColor() == PieceColor.BLACK, "Pawn 2 wrong color");
+        piece = board.getPieceAtPoint(new Point(4,1));
+        assertTrue("Pawn 2", piece instanceof Pawn);
+        assertTrue("Pawn 2 wrong color", piece.getPieceColor() == PieceColor.BLACK);
+
+    }
+
+    @Test
+    public void testInitializeWhitePieces(){
+        Board board = new Board(101);
+        board.initialize();
+        Piece piece = board.getPieceAtPoint(new Point(4,5));
+        assertTrue("First Rook", piece instanceof Rook);
+        assertTrue("First rook wrong color", piece.getPieceColor() == PieceColor.WHITE);
+
+        piece = board.getPieceAtPoint(new Point(4,6));
+        assertTrue("2nd Rook", piece instanceof Rook);
+        assertTrue("2nd Rook wrong color", piece.getPieceColor() == PieceColor.WHITE);
+
+        piece = board.getPieceAtPoint(new Point(3,6));
+        assertTrue("Bishop", piece instanceof Bishop);
+        assertTrue("Bishop wrong color", piece.getPieceColor() == PieceColor.WHITE);
+
+        piece = board.getPieceAtPoint(new Point(3,5));
+        assertTrue("King", piece instanceof King);
+        assertTrue("King wrong color", piece.getPieceColor() == PieceColor.WHITE);
+
+        piece = board.getPieceAtPoint(new Point(2,5));
+        assertTrue("Pawn 1", piece instanceof Pawn);
+        assertTrue("Pawn 1 wrong color", piece.getPieceColor() == PieceColor.WHITE);
+
+        piece = board.getPieceAtPoint(new Point(2,6));
+        assertTrue("Pawn 2", piece instanceof Pawn);
+        assertTrue("Pawn 2 wrong color", piece.getPieceColor() == PieceColor.WHITE);
+
+    }
+
+
+    @Test
+    public void testMovePiece1(){
 
     }
 }

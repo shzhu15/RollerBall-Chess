@@ -57,6 +57,10 @@ public class Board {
         return false;
     }
 
+    public void placePiece(Piece piece){
+        pieces.add(piece);
+    }
+
     public ArrayList<Piece> getPieces() {
         return pieces;
     }
@@ -92,9 +96,7 @@ public class Board {
         return ret;
     }
 
-    public void placePieceAtPoint(Piece piece){
-        pieces.add(piece);
-    }
+
 
     @Override
     public String toString(){
