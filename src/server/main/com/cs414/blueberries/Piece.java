@@ -71,7 +71,7 @@ public abstract class Piece {
                 ret.add(new Point(i, j));
             }
         }
-        return ret;
+        return this.possibleMoves;
     }
 
     @Override
