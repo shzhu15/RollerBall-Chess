@@ -62,18 +62,7 @@ public abstract class Piece {
         return true;
     }
 
-    // I hope calling this a ton will be the worst thing in the world, but if it gets to be computationally
-    // expensive we can store the result and call an updateMoves method at the start of every turn
-    public HashSet<Point> getPossibleMoves(){
-        //This is just every point on the board
-        HashSet<Point> ret = new HashSet<Point>();
-        for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 6; j++){
-                ret.add(new Point(i, j));
-            }
-        }
-        return this.possibleMoves;
-    }
+    public HashSet<Point> getPossibleMoves(){return this.possibleMoves;}
 
     @Override
     public String toString(){
@@ -113,7 +102,11 @@ public abstract class Piece {
         return true;
     }
 
+    public static boolean isCorner(Point p){
+        return (p.equals(new Point(0,0)) || p.equals(new Point(0,6)) || p.equals(new Point(6,0)) || p.equals(new Point(6,6)));
+    }
 
+    // Should be called for every piece at the start of every turn
     abstract public void updateMoves();
 }
 
