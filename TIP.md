@@ -143,7 +143,7 @@ Starts the current game (doens't have error checking currently)
 ```
 Returns success string
 
-##Move/oldX/oldY/newX/newY(POST)
+## Move/oldX/oldY/newX/newY(POST)
 Moves the piece located at oldX/oldY to newX/newY. Doesn't currently check for all edgecases
 ```
 {
