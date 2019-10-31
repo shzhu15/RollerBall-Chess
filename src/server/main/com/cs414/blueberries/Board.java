@@ -24,11 +24,11 @@ public class Board {
 
     public void initialize(){
         pieces.add(new King(PieceColor.BLACK, BLACK_STARTING_LOCATION, this));
-        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 0), this));
-        pieces.add(new Rook(PieceColor.BLACK, new Point(4, 1), this));
-        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 0), this));
-        pieces.add(new Pawn(PieceColor.BLACK, new Point(2, 1), this));
-        pieces.add(new Bishop(PieceColor.BLACK, new Point(3, 1), this));
+        pieces.add(new Rook(PieceColor.BLACK, new Point(2, 0), this));
+        pieces.add(new Rook(PieceColor.BLACK, new Point(2, 1), this));
+        pieces.add(new Pawn(PieceColor.BLACK, new Point(4, 0), this));
+        pieces.add(new Pawn(PieceColor.BLACK, new Point(4, 1), this));
+        pieces.add(new Bishop(PieceColor.BLACK, new Point(3, 0), this));
 
         pieces.add(new King(PieceColor.WHITE, WHITE_STARTING_LOCATION, this));
         pieces.add(new Rook(PieceColor.WHITE, new Point(4, 5), this));
