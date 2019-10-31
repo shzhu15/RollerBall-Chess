@@ -99,6 +99,21 @@ public abstract class Piece {
         }
     }
 
+    public boolean isValidLocation(Point point){
+        if(point.x < 0 || point.y < 0){
+            return false;
+        }
+        if(point.x >6 || point.y > 6){
+            return false;
+        }
+        if( (point.x>=2 && point.x <=4) && (point.y>=2 && point.y <= 4)){
+            return false;
+        }
+
+        return true;
+    }
+
+
     abstract public void updateMoves();
 }
 
