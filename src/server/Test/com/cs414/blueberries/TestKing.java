@@ -121,4 +121,42 @@ public class TestKing {
         assertEquals(expected.size(),actual.size());
     }
 
+    public void testTrueCheckmate1(){
+        Board board = new Board(69);
+        King king = new King(PieceColor.WHITE, new Point(3, 1), board);
+        king.updateMoves();
+        Rook rook = new Rook(PieceColor.BLACK, new Point(0, 1), board);
+        rook.updateMoves();
+        board.placePiece(king);
+        board.placePiece(rook);
+        assertTrue("King Can't Move Out Of Check", king.isCheckmate());
+    }
+
+    public void testEscapableCaptureCheckmate1(){
+        Board board = new Board(69);
+        King king = new King(PieceColor.WHITE, new Point(3, 1), board);
+        king.updateMoves();
+        Rook savior = new Rook(PieceColor.WHITE, new Point(0, 0), board);
+        savior.updateMoves();
+        Rook rook = new Rook(PieceColor.BLACK, new Point(0, 1), board);
+        rook.updateMoves();
+        board.placePiece(king);
+        board.placePiece(rook);
+        board.placePiece(savior);
+        assertFalse("King can be saved", king.isCheckmate());
+    }
+
+    public void testEscapableBlockCheckmate1(){
+        Board board = new Board(69);
+        King king = new King(PieceColor.WHITE, new Point(3, 1), board);
+        king.updateMoves();
+        Rook savior = new Rook(PieceColor.WHITE, new Point(2, 0), board);
+        savior.updateMoves();
+        Rook rook = new Rook(PieceColor.BLACK, new Point(0, 1), board);
+        rook.updateMoves();
+        board.placePiece(king);
+        board.placePiece(rook);
+        board.placePiece(savior);
+        assertFalse("King can be saved", king.isCheckmate());
+    }
 }
