@@ -95,4 +95,30 @@ public class TestKing {
         assertTrue(actual.containsAll(expected));
         assertEquals(expected.size(),actual.size());
     }
+
+    @Test
+    public void testKingMix(){
+        Board board = new Board(100);
+        King king = new King(PieceColor.BLACK, new Point(3,1), board);
+        board.placePiece(king);
+        Pawn pawn1 = new Pawn(PieceColor.BLACK, new Point(2,1), board);
+        Pawn pawn2 = new Pawn(PieceColor.BLACK, new Point(4,0), board);
+        Pawn pawn3 = new Pawn(PieceColor.WHITE, new Point(3,0), board);
+        Pawn pawn4 = new Pawn(PieceColor.WHITE, new Point(4,1), board);
+        board.placePiece(pawn1);
+        board.placePiece(pawn2);
+        board.placePiece(pawn3);
+        board.placePiece(pawn4);
+        king.updateMoves();
+
+        HashSet<Point> expected = new HashSet<>();
+        expected.add(new Point(2,0));
+        expected.add(new Point(3,0));
+        expected.add(new Point(4,1));
+
+        HashSet<Point> actual = king.getPossibleMoves();
+        assertTrue(actual.containsAll(expected));
+        assertEquals(expected.size(),actual.size());
+    }
+
 }

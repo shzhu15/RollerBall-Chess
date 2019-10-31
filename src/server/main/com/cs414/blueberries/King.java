@@ -35,7 +35,6 @@ public class King extends Piece {
     }
 
     public void moveSet(Point point) {
-
         //up
         move(point, 0, -1);
 
@@ -108,17 +107,4 @@ public class King extends Piece {
         return false;
     }
 
-    private boolean isValidLocation(Point point){
-        if(point.x < 0 || point.y < 0){
-            return false;
-        }
-        if(point.x >6 || point.y > 6){
-            return false;
-        }
-        if( (point.x>=2 && point.x <=4) && (point.y>=2 && point.y <= 4)){
-            return false;
-        }
-
-        return true;
-    }
 }
