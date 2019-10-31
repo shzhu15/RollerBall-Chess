@@ -110,10 +110,12 @@ public class GameApi {
                 // Gets the piece by parsing the req parameters. Assumes Integer
                 Point oldPosition = new Point(Integer.parseInt(req.params(":oldX")), Integer.parseInt(req.params(":oldY")));
                 Point newPosition = new Point(Integer.parseInt(req.params(":newX")), Integer.parseInt(req.params(":newY")));
+                System.out.println(newPosition);
                 Piece piece = serverInstanceOfGameObject.getBoard().getPieceAtPoint(oldPosition);
                 if(piece.equals(null)){
                     return "No peice at position " + req.params(":oldX") + ", " + req.params(":oldY");
                 }
+                piece.updateMoves();
                 boolean response = serverInstanceOfGameObject.getBoard().movePiece(piece, newPosition);
                 if(!response){
                     System.out.println("Not a valid move");
