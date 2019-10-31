@@ -16,6 +16,7 @@ enum PieceType {
 }
 
 public abstract class Piece {
+    public enum Orientation {BOTTOM, LEFT, TOP, RIGHT}
     protected PieceType type;
     private PieceColor pieceColor;
     private Point location;
@@ -79,6 +80,23 @@ public abstract class Piece {
         StringBuilder builder = new StringBuilder();
         builder.append("[" +this.type + " " + this.getPieceColor() + " " + this.location + "]");
         return builder.toString();
+    }
+
+    public Orientation getPieceOrientation(Point point){
+        int x = point.x;
+        int y = point.y;
+        if((x <= 5 && x>= 2 && y ==5) || (x<=6 && x >=1 && y==6)){
+            return Orientation.BOTTOM;
+        }
+        else if((y<=6 && y>=1 && x==0) || (y<=5 && y>=2 && x== 1)){
+            return Orientation.LEFT;
+        }
+        else if((x <= 4 && x>= 1 && y ==1) || (x<=5 && x >=0 && y==0)){
+            return Orientation.TOP;
+        }
+        else{
+            return Orientation.RIGHT;
+        }
     }
 
     abstract public void updateMoves();
