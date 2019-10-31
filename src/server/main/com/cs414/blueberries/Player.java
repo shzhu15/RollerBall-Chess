@@ -1,11 +1,8 @@
 package com.cs414.blueberries;
 
-import jdk.nashorn.internal.objects.Global;
 import org.json.simple.JSONObject;
-import spark.Request;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Player {
     private String email;
