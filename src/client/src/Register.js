@@ -27,9 +27,13 @@ class Register extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
+        let regex =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
         if (!this.state.email) {
             return this.setState({ error: ' Email is required' });
+        }
+        if(!regex.test(this.state.email)){
+            return this.setState({ error: ' Please enter a valid email address' });
         }
         if (!this.state.username) {
             return this.setState({ error: ' Username is required' });
