@@ -44,6 +44,7 @@ class MoveSubmission extends React.Component {
 
         request.post(options, function (error, response, body) {
             event.persist();
+
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', JSON.parse(body));
@@ -55,7 +56,7 @@ class MoveSubmission extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} style={{fontSize: "20px"}}>
                 <label>
                     Enter "oldX, oldY, newX, newY":
                     <input type="text" value={this.state.value} onChange={this.handleChange} />

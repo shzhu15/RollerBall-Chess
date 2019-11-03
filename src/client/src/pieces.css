@@ -14,6 +14,7 @@
 }
 
 .board-row:after {
+    margin: auto;
     clear: both;
     content: "";
     display: table;

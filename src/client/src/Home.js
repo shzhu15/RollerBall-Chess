@@ -18,8 +18,9 @@ class Home extends Component {
         this.getUser = this.getUser.bind(this);
         this.getGames = this.getGames.bind(this);
         this.makeBoards = this.makeBoards.bind(this);
-        console.log(localStorage.getItem("user"));
+        this.getUser();
         this.getGames();
+
     }
 
     componentDidMount() {
@@ -27,12 +28,15 @@ class Home extends Component {
     }
 
     getUser() {
-        this.setState({user: localStorage.getItem("user")});
+        localStorage.getItem("user") ? this.setState({user: localStorage.getItem("user")}) : this.setState({user: "alex"});
+
     }
 
     getGames() {
+        let email = localStorage.getItem("email");
+        localStorage.getItem("email") ? email = localStorage.getItem("email") : email = "alex@email.com";
         const rqt = {
-            "email" : localStorage.getItem("email"),
+            "email" : email,
         };
         let options = {
             method: "GET",
@@ -56,6 +60,7 @@ class Home extends Component {
             if(this.state.games.sent[0]){
                 this.state.games.sent.forEach((game) => {
                     boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
+                    boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
 
                 })
@@ -67,6 +72,7 @@ class Home extends Component {
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
                         );
+                    boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })
             }
@@ -77,6 +83,7 @@ class Home extends Component {
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
                         );
+                    boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })
             }
@@ -87,21 +94,23 @@ class Home extends Component {
     render() {
         const boards = this.makeBoards();
         return (
-            <div className="Home" style={{textAlignVertical: "center", textAlign: "center"}}>
+            <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
                 <br/>
                 <br/>
                 <br/>
                 <br/>
                 <br/>
                 <header>
-                    <p>
+                    <p style={{fontSize: "30px"}}>
                         Home
                     </p>
                 </header>
                 <h1>Hi {this.state.user}</h1>
 
-                <h5>Here are your active games</h5>
+                <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
+                <div style={{textAlignVertical: "left", textAlign: "left"}}>
                 {boards}
+                </div>
             <form>
                 <br/>
                 <br/>
