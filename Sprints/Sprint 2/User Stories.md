@@ -33,7 +33,7 @@
   
 ## (#64) As a user, I want to be able to login to my account 
   - Create UI for account login (#98) 
-  - Add API endpoint for login (@#99)
+  - Add API endpoint for login (#99)
   - Define login API in [TIP.md](https://github.com/hamjared/cs414-f19-001-Blueberries/blob/master/TIP.md) (#100)
   - Send login API request from client to server (#101)
   - Add password check to Player class on server side (#102)
