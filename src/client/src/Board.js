@@ -19,7 +19,6 @@ class Board extends Component {
     }
 
     render() {
-        console.log("Meet me here! ", this.props.pieces);
         const board = [];
         for(let i = 0; i < 7; i++){
             const squareRows = [];

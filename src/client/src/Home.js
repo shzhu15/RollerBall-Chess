@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link, withRouter} from "react-router-dom";
 import request from 'request';
 import Board from "./Board";
+import MoveSubmission from "./MoveSubmission";
 
 class Home extends Component {
     constructor(props) {
@@ -54,21 +55,29 @@ class Home extends Component {
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
                 this.state.games.sent.forEach((game) => {
-                    boards.push(<Board pieces={game.board.pieces}/>);
+                    boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
+                    boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
+
                 })
             }
         }
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
                 this.state.games.pending.forEach((game) => {
-                    boards.push(<Board pieces={game.board.pieces}/>);
+                    boards.push(
+                        <Board id={game.id} pieces={game.board.pieces}/>
+                        );
+                    boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })
             }
         }
         if(this.state.games.active){
             if(this.state.games.active[0]){
                 this.state.games.active.forEach((game) => {
-                    boards.push(<Board pieces={game.board.pieces}/>);
+                    boards.push(
+                        <Board id={game.id} pieces={game.board.pieces}/>
+                        );
+                    boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })
             }
         }
