@@ -46,3 +46,17 @@ Major action items, implementation decisions and details of discussion from Scru
 
 ### Code Related:
   - Unchanged from last sprint
+  
+  
+ ## 10/30/2019
+ ### Implementation Decisions: 
+- Following a demo with the Product Owner, the following need fixed/implented before 11/4:
+  - Larger font size on the front end
+  - Need to be able to enter moves using the GUI (ie not using IntelliJ or Postman)
+  - On registration form only allow valid email addresses
+ ### Major Action Items:
+   - Alex: Implement text entry for moving pieces from GUI
+   - Jared: Validate email address
+   - Sharon: Make font bigger
+   - Robbie: Update Class Diagram
+   
