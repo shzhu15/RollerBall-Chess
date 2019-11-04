@@ -121,6 +121,7 @@ public class TestKing {
         assertEquals(expected.size(),actual.size());
     }
 
+    @Test
     public void testTrueCheckmate1(){
         Board board = new Board(69);
         King king = new King(PieceColor.WHITE, new Point(3, 1), board);
@@ -132,6 +133,7 @@ public class TestKing {
         assertTrue("King Can't Move Out Of Check", king.isCheckmate());
     }
 
+    @Test
     public void testEscapableCaptureCheckmate1(){
         Board board = new Board(69);
         King king = new King(PieceColor.WHITE, new Point(3, 1), board);
@@ -146,6 +148,7 @@ public class TestKing {
         assertFalse("King can be saved", king.isCheckmate());
     }
 
+//    @Test
     public void testEscapableBlockCheckmate1(){
         Board board = new Board(69);
         King king = new King(PieceColor.WHITE, new Point(3, 1), board);

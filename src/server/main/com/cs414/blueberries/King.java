@@ -1,5 +1,8 @@
 package com.cs414.blueberries;
 import java.awt.*;
+import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.ArrayList;
 
 public class King extends Piece {
 
@@ -53,7 +56,6 @@ public class King extends Piece {
         //upRight
         move(point, 1, -1);
 
-
         //downLeft
         move(point, -1, 1);
 
@@ -73,8 +75,15 @@ public class King extends Piece {
             //if there is no piece or piece of same color at the new location, process
             if(piece == null || piece.getPieceColor() != this.getPieceColor()) {
                 //Check if move will place king into check, if not add move
-                if(this.board.getAllMovesOfColor(PieceColor.WHITE).contains(newLocation) == false) {
-                    this.possibleMoves.add(new Point(newLocation.x, newLocation.y));
+                if(this.getPieceColor() == PieceColor.BLACK) {
+                    if (this.board.getAllMovesOfColor(PieceColor.WHITE).contains(newLocation) == false) {
+                        this.possibleMoves.add(new Point(newLocation.x, newLocation.y));
+                    }
+                }
+                if(this.getPieceColor() == PieceColor.WHITE) {
+                    if (this.board.getAllMovesOfColor(PieceColor.BLACK).contains(newLocation) == false) {
+                        this.possibleMoves.add(new Point(newLocation.x, newLocation.y));
+                    }
                 }
             }
         }
@@ -86,7 +95,57 @@ public class King extends Piece {
         if(this.possibleMoves.isEmpty() == true && isCheck(this.board) == true) {
             return true;
         }
-        return false;
+
+        HashSet<Point> enemyMoves = new HashSet<Point>();
+        ArrayList<Piece> enemyPieces = new ArrayList<Piece>();
+        ArrayList<Piece> checkPieces = new ArrayList<Piece>();
+        ArrayList<Piece> ourPieces = new ArrayList<Piece>();
+
+        if(this.getPieceColor() == PieceColor.BLACK) {
+            enemyMoves = this.board.getAllMovesOfColor(PieceColor.WHITE);
+            enemyPieces = this.board.getPieces(PieceColor.WHITE);
+            ourPieces = this.board.getPieces(PieceColor.BLACK);
+        }
+        if(this.getPieceColor() == PieceColor.WHITE) {
+            enemyMoves = this.board.getAllMovesOfColor(PieceColor.BLACK);
+            enemyPieces = this.board.getPieces(PieceColor.BLACK);
+            ourPieces = this.board.getPieces(PieceColor.WHITE);
+        }
+        for(int i = 0; i < enemyPieces.size(); i++) {
+            if(enemyPieces.get(i).getPossibleMoves().contains(this.getLocation()) == true) {
+                checkPieces.add(enemyPieces.get(i));
+            }
+        }
+        for(int i = 0; i < ourPieces.size(); i++) {
+            //capture
+            for (int j = 0; j < enemyPieces.size(); j++) {
+                if (ourPieces.get(i).getPossibleMoves().contains(enemyPieces.get(j).getLocation()) == true) {
+                    Board newBoard = this.board;
+                    newBoard.movePiece(ourPieces.get(i), enemyPieces.get(j).getLocation());
+                    if (isCheck(newBoard) == false) {
+                        return false;
+                    }
+                }
+            }
+            //block
+            for (Point m : enemyMoves) {
+//                System.out.println("enemy point: " + m.x + ", " + m.y);
+//                for(Point f : ourPieces.get(i).getPossibleMoves()) {
+//                    System.out.println("friendly point: " + f.x + ", " + f.y);
+//
+//                }
+                if (ourPieces.get(i).getPossibleMoves().contains(m) == true) {
+                    System.out.println("true : " + ourPieces.get(i).getType());
+                    Board newBoard = this.board;
+                    newBoard.movePiece(ourPieces.get(i), m);
+                    if (isCheck(newBoard) == false) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public boolean checkMoveWin() {
