@@ -26,9 +26,9 @@ This document tracks code written vs user stories in tabular form. The code writ
   | I want to be able to move a piece                                                  |               |                |             |                   |                     |                |          |
   | I want to only be able to move a piece to a legal spot on the board                |               |                |             |                   |                     |                |          |
   | I want to be able to see the game board associated with the game I am playing      |               |                |             |                   |    x                 |                |          |
-  | I want to be able to register for an account                                       |               |     x           |             |                   |                     |                |          |
-  | I want to be able to login to my account                                           |           x    |                |             |                   |                     |                |          |
-  | I want to be able to logout of my account                                          |               |                |        x     |                   |                     |                |          |
+  | I want to be able to register for an account                                       |               |     x           |             |    x               |                     |                |    x      |
+  | I want to be able to login to my account                                           |           x    |                |             |    x               |                     |                |    x      |
+  | I want to be able to logout of my account                                          |               |                |        x     |     x              |                     |                |          |
   | I want my past and current games to be displayed after logging in                  |               |                |             |                   |                     |                |      x    |
   | I want to be able to invite my friend to a match                                   |               |                |             |                   |                     |                |          |
   | I want to be able to accept a new game invitation                                  |               |                |             |                   |                     |                |          |
