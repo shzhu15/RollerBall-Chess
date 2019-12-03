@@ -14,17 +14,22 @@ export default class App extends Component {
         super(props);
         this.state = {
             userID: "example",
-            wasInitialized: false
+            wasInitialized: false,
+            serverAddr: this.getServerAddr()
         };
         this.updateUser = this.updateUser.bind(this);
     }
     dummyApiCall() {
-
-        request('http://localhost:4567/hello', function (error, response, body) {
+        let url = this.state.serverAddr + "hello"
+        request(url, function (error, response, body) {
             console.log('error:', error);
             console.log('statusCode:', response && response.statusCode);
             console.log('body:', body);
         });
+    }
+
+    getServerAddr(){
+        return process.env.REACT_APP_SERVER_ADDR
     }
 
     updateUser(name) {

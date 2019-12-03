@@ -13,6 +13,7 @@ class Home extends Component {
             password: '',
             error: '',
             games: '',
+            serverAddr: this.getServerAddr()
         };
 
         this.getUser = this.getUser.bind(this);
@@ -21,6 +22,10 @@ class Home extends Component {
         this.getUser();
         this.getGames();
 
+    }
+
+    getServerAddr(){
+        return process.env.REACT_APP_SERVER_ADDR
     }
 
     componentDidMount() {
@@ -38,9 +43,10 @@ class Home extends Component {
         const rqt = {
             "email" : email,
         };
+        let url = this.state.serverAddr + "getGame"
         let options = {
             method: "GET",
-            uri : "http://localhost:4567/getGame",
+            uri : url,
             body: JSON.stringify(rqt),
             insecure: true,
         };

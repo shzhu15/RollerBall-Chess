@@ -7,6 +7,7 @@ class MoveSubmission extends React.Component {
         this.state = {
             id: this.props.id,
             value: "",
+            serverAddr: this.getServerAddr(),
             // oldX: "",
             // oldY: "",
             // newX: "",
@@ -14,6 +15,10 @@ class MoveSubmission extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    getServerAddr(){
+        return process.env.REACT_APP_SERVER_ADDR
     }
     handleChange(event) {
         this.setState({
@@ -33,9 +38,11 @@ class MoveSubmission extends React.Component {
         const rqt = {
             "id": this.state.id
         };
+
+        let url = this.state.serverAddr + 'move/' + oldX +"/" + oldY + "/" + newX + "/" + newY
         let options = {
             method: "POST",
-            uri : `http://localhost:4567/move/${oldX}/${oldY}/${newX}/${newY}`,
+            uri : url,
             body: JSON.stringify(rqt),
             insecure: true,
         };

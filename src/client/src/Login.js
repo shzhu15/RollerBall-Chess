@@ -12,12 +12,18 @@ class Login extends Component {
             password: '',
             error: '',
             temp: {},
+            serverAddr: this.getServerAddr()
         };
 
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleUserChange = this.handleUserChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dismissError = this.dismissError.bind(this);
+
+    }
+
+    getServerAddr(){
+        return process.env.REACT_APP_SERVER_ADDR
     }
 
     dismissError() {
@@ -38,9 +44,11 @@ class Login extends Component {
             'email': this.state.email,
             'password': this.state.password
         };
+        let url = this.state.serverAddr + "login"
+        console.log(url)
         let options = {
             method: "POST",
-            uri : "http://localhost:4567/login",
+            uri : url,
             body: JSON.stringify(rqt),
             insecure: true,
             };
@@ -80,6 +88,7 @@ class Login extends Component {
     }
 
     render() {
+
         return (
             <div className="Login" style={{textAlignVertical: "center", textAlign: "center"}}>
                 <form onSubmit={this.handleSubmit}>

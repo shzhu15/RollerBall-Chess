@@ -12,6 +12,7 @@ class Register extends Component {
             username: '',
             password: '',
             error: '',
+            serverAddr: this.getServerAddr()
         };
 
         this.handlePassChange = this.handlePassChange.bind(this);
@@ -19,6 +20,10 @@ class Register extends Component {
         this.handleUserChange = this.handleUserChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.dismissError = this.dismissError.bind(this);
+    }
+
+    getServerAddr(){
+        return process.env.REACT_APP_SERVER_ADDR
     }
 
     dismissError() {
@@ -46,9 +51,10 @@ class Register extends Component {
             "UserID" : this.state.username,
             "password" : this.state.password,
         };
+        let url = this.state.serverAddr + "register"
         let options = {
             method: "POST",
-            uri : "http://localhost:4567/register",
+            uri : url,
             body: JSON.stringify(rqt),
             insecure: true,
         };
