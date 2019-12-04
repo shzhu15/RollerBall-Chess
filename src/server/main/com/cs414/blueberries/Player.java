@@ -32,7 +32,15 @@ public class Player {
         if (GlobalData.players.containsKey(this.email)) return false;
         GlobalData.players.put(this.email, this);
         GlobalData.writePlayers(GlobalData.PLAYERS_FILENAME);
-        System.out.println("Players file updated");
+        System.out.println("Players registered");
+        return true;
+    }
+
+    public boolean unregister() {
+        if (!GlobalData.players.containsKey(this.email)) return false;
+        GlobalData.players.remove(this.email);
+        GlobalData.writePlayers(GlobalData.PLAYERS_FILENAME);
+        System.out.println("Players unregistered");
         return true;
     }
 
