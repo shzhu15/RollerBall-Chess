@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import request from "request";
 import { Link, withRouter } from "react-router-dom";
 import { history } from './History';
+import Cookies from "./Cookies";
 
 
 class Login extends Component {
@@ -31,6 +32,7 @@ class Login extends Component {
     }
 
     handleSubmit(evt) {
+
         evt.preventDefault();
 
         if (!this.state.email) {
@@ -66,6 +68,9 @@ class Login extends Component {
             if(after.success === true) {
                 // console.log("username: ");
                 // console.log(after.UserID);
+
+                Cookies.createCookie("user", after.UserID)
+                Cookies.createCookie("email", after.email)
                 localStorage.setItem("user", after.UserID);
                 localStorage.setItem("email", after.email);
                 self.props.updateUser(after.UserID);
