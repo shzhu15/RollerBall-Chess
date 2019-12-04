@@ -39,6 +39,14 @@ public class GameApi {
             return player.register();
         });
 
+        post("/unregister", (req, res) -> {
+            Gson gson = new Gson();
+            System.out.println(req.body());
+            Player player = gson.fromJson(req.body(), Player.class);
+            System.out.println("Unregistering player: " + player.toString());
+            return player.unregister();
+        });
+
         // Log in player
         post("/login", (req, res) -> {
             System.out.println(req.body());
