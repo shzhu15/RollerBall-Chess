@@ -160,6 +160,7 @@ class Home extends Component {
                         games={this.state.games.finished}
                     />
                     <button><Link to="/">logout</Link></button>
+                    <button><Link to="/Unregister">unregister account</Link></button>
                 </div>
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>

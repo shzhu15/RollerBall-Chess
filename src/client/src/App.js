@@ -3,6 +3,7 @@ import request from 'request';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
+import Unregister from './Unregister';
 import Home from './Home';
 import {PrivateRoute} from './PrivateRoute';
 import { history } from './History';
@@ -49,6 +50,7 @@ export default class App extends Component {
                         <Redirect exact from="/" to="/Login" />
                         <Route path="/Login" render={(props) => <Login {...props} updateUser={this.updateUser} user={this.state.userID} />}/>
                         <Route path="/Register" component={Register}/>
+                        <Route path="/Unregister" component={Unregister}/>
                         <PrivateRoute exact path="/Home" component={Home} wasInitialized={this.state.wasInitialized} user={this.state.userID}/>
                     </Switch>
                 </Router>
