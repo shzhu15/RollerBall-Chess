@@ -126,7 +126,9 @@ class Home extends Component {
 
     render() {
         const boards = this.makeBoards();
-
+        console.log("-------games from Home -------------")
+        console.log(this.state.games.finished)
+        console.log("-------end games from Home -------------")
         return (
 
             <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
@@ -142,7 +144,7 @@ class Home extends Component {
                 </header>
                 <h1>Hi {this.state.user}</h1>
                 <GameHistory
-                    finsishedGames={this.state.games.finished}
+                    finishedGames={this.state.games.finished}
                 />
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>

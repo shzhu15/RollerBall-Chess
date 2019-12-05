@@ -93,7 +93,9 @@ public class GameApi {
 
         post("/acceptInvite", (req, res) -> {
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
-            GlobalData.games.get(Integer.parseInt((String) body.get("id"))).ready = true;
+            Game game = GlobalData.games.get(Integer.parseInt((String) body.get("id")));
+            game.ready = true;
+            game.setStartTimeToNow();
             GlobalData.writeGames(GlobalData.GAMES_FILENAME);
             return "Invite accepted";
         });
@@ -102,6 +104,8 @@ public class GameApi {
            System.out.println(req.body());
            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
            Game game = new Game((String) body.get("p1"), (String) body.get("p2"));
+           game.finished = true;
+           game.setEndTimeToNow();
             GlobalData.games.put(game.getId(), game);
            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
            return "Game created: " + game.toString();
