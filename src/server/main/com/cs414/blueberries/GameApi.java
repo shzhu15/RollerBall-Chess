@@ -73,14 +73,18 @@ public class GameApi {
             gamesMap.put("sent", new ArrayList<>());
             gamesMap.put("pending", new ArrayList<>());
             gamesMap.put("active", new ArrayList<>());
+            gamesMap.put("finished", new ArrayList<>());
 
             GlobalData.games.forEach((id, game) -> {
                 if (!game.ready) {
                     if (game.getP1().equals(body.get("email"))) gamesMap.get("sent").add(game);
                     if (game.getP2().equals(body.get("email"))) gamesMap.get("pending").add(game);
                 }
-                else {
+                else if (game.ready && !game.finished){
                     gamesMap.get("active").add(game);
+                }
+                else{
+                    gamesMap.get("finished").add(game);
                 }
             });
             System.out.println("Sending games for "+body.get("email"));
@@ -90,6 +94,7 @@ public class GameApi {
         post("/acceptInvite", (req, res) -> {
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
             GlobalData.games.get(Integer.parseInt((String) body.get("id"))).ready = true;
+            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
             return "Invite accepted";
         });
 
@@ -97,7 +102,7 @@ public class GameApi {
            System.out.println(req.body());
            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
            Game game = new Game((String) body.get("p1"), (String) body.get("p2"));
-           GlobalData.games.put(game.getId(), game);
+            GlobalData.games.put(game.getId(), game);
            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
            return "Game created: " + game.toString();
         });

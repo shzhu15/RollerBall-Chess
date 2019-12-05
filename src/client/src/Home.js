@@ -27,6 +27,7 @@ class Home extends Component {
         this.closeModal = this.closeModal.bind(this)
         this.getUser();
         this.getGames();
+        this.makeBoards()
 
 
     }
@@ -40,9 +41,6 @@ class Home extends Component {
     }
 
     getUser() {
-        console.log("-----------------")
-        console.log(Cookies.readCookie('user'))
-        console.log("-----------------")
         if(Cookies.readCookie('user') != null){
             this.setState({user: Cookies.readCookie('user')})
         }
@@ -128,6 +126,7 @@ class Home extends Component {
 
     render() {
         const boards = this.makeBoards();
+
         return (
 
             <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
@@ -143,7 +142,7 @@ class Home extends Component {
                 </header>
                 <h1>Hi {this.state.user}</h1>
                 <GameHistory
-                    games={this.state.games}
+                    finsishedGames={this.state.games.finished}
                 />
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>

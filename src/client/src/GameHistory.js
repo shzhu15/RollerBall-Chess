@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Link, withRouter} from "react-router-dom";
 import Modal from 'react-modal'
 import Table from "react-bootstrap/Table";
+import Cookies from "./Cookies";
+import request from "request";
 
 class GameHistory extends Component {
     constructor(props) {
@@ -9,12 +11,14 @@ class GameHistory extends Component {
         this.state = {
             modalIsOpen: false,
             columns: this.makeColumns(),
-            data: this.makeData()
+            data: this.makeData(),
+            games:'',
+
+
         };
 
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this)
-
 
 
     }
@@ -24,10 +28,11 @@ class GameHistory extends Component {
     }
 
     componentDidMount() {
-
+        this.makeData()
     }
 
     makeColumns(){
+
         return [
             {
                 Header: "Game History",
@@ -47,9 +52,8 @@ class GameHistory extends Component {
 
 
 
-
     makeData(){
-        console.log(this.props.games)
+
         return [
             {
             id: 1234,
@@ -72,8 +76,12 @@ class GameHistory extends Component {
     }
 
     renderTableData(){
+
         return this.state.data.map((data, index) => {
-            const { id, p1, p2 } = data //destructuring
+            const { id, p1, p2, ready } = data //destructuring
+            console.log("in map in render table data")
+            console.log(data)
+            console.log("printed data")
             return (
                 <tr key={id}>
                     <td>{id}</td>
@@ -85,6 +93,7 @@ class GameHistory extends Component {
     }
 
     render() {
+
         return (
 
             <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
