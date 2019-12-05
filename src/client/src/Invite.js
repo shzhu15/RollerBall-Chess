@@ -15,6 +15,7 @@ class Invite extends Component {
             gamesPending: [],
             invite: '',
             error: '',
+            games: '',
 
         };
 
@@ -41,14 +42,53 @@ class Invite extends Component {
 
 
     updateGames(){
-        console.log('invite:', this.state.invite);
-
-        if(this.props.games === undefined){
-            return
-        }
-        this.setState({gamesSent: this.props.games.sent})
-        this.setState({gamesPending: this.props.games.pending})
         console.log('games:', this.props.games);
+
+        let email = localStorage.getItem("email");
+        // localStorage.getItem("email") ? email = localStorage.getItem("email") : email = "alex@email.com";
+        if(Cookies.readCookie('email') != null){
+            email = Cookies.readCookie('email')
+        }
+        else{
+            email = "alex@email.com"
+        }
+        const rqt = {
+            "email" : email,
+        };
+        // let url = this.state.serverAddr + "getGame"
+        let url = "http://localhost:4567/getGame"
+
+        let options = {
+            method: "GET",
+            uri : url,
+            body: JSON.stringify(rqt),
+            insecure: true,
+        };
+        console.log('games option:', options);
+
+        const self = this;
+        request.post(options, function (error, response, body) {
+            console.log('games body:', JSON.parse(body).sent);
+            if(body != undefined) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', JSON.parse(body));
+                console.log('Retrieved game');
+                self.setState({games: JSON.parse(body)});
+                self.setState({gamesSent: JSON.parse(body).sent})
+                self.setState({gamesPending: JSON.parse(body).pending})
+            }
+        });
+        console.log('after games:', this.state.games);
+        console.log('sent games:', this.state.gamesSent);
+        console.log('pending games:', this.state.gamesPending);
+
+        // if(this.props.games === undefined){
+        //     return
+        // }
+        // this.setState({gamesSent: this.props.games.sent})
+        // this.setState({gamesPending: this.props.games.pending})
+        // console.log('games:', this.props.games);
 
     }
 
@@ -64,13 +104,12 @@ class Invite extends Component {
     renderSent(){
 
         return this.state.gamesSent.map((data, index) => {
-            const {id, p1, p2, ready} = data //destructuring
+            const {id, p1, p2} = data //destructuring
             return (
                 <tr key={id}>
                     <td>{id}</td>
                     <td>{p1}</td>
                     <td>{p2}</td>
-                    <td> {ready}</td>
                 </tr>
             )
         })
@@ -79,26 +118,53 @@ class Invite extends Component {
     renderPending(){
 
         return this.state.gamesPending.map((data, index) => {
-            const {id, p1, p2, ready} = data //destructuring
-            function handleClick(e) {
+            const {id, p1, p2} = data //destructuring
+            function handleClick1(e) {
+                e.preventDefault();
+                console.log('The button was clicked.');
+                // let url = this.state.serverAddr + "acceptInvite"
+                let url = "http://localhost:4567/acceptInvite"
+                let options = {
+                    method: "POST",
+                    uri: url,
+                    body: JSON.stringify({id}),
+                    insecure: true,
+                };
+                request.post(options, function (error, response, body) {
+                    if(body != undefined) {
+                        console.log('error:', error);
+                        console.log('statusCode:', response && response.statusCode);
+                        console.log('body:', JSON.parse(body));
+                        console.log('START game');
+                    }
+                });
+            }
+            function handleClick2(e) {
                 e.preventDefault();
                 console.log('The button was clicked.');
                 let url = this.state.serverAddr + "acceptInvite"
                 let options = {
                     method: "POST",
                     uri: url,
-                    body: JSON.stringify(''),
+                    body: JSON.stringify({id}),
                     insecure: true,
                 };
+                request.post(options, function (error, response, body) {
+                    if(body != undefined) {
+                        console.log('error:', error);
+                        console.log('statusCode:', response && response.statusCode);
+                        console.log('body:', JSON.parse(body));
+                        console.log('Retrieved game');
+                    }
+                });
             }
             return (
                 <tr key={id}>
                     <td>{id}</td>
                     <td>{p1}</td>
                     <td>{p2}</td>
-                    <td> {ready}</td>
-                    <button onClick={handleClick}>Invite</button>
-
+                    <button onClick={handleClick1}>Accept</button>
+                    <button onClick={handleClick2}>Reject</button>
                 </tr>
             )
         })
@@ -126,7 +192,9 @@ class Invite extends Component {
             "p1": email,
             "p2": this.state.invite
         };
-        let url = this.state.serverAddr + "sendInvite"
+        // let url = this.state.serverAddr + "sendInvite"
+        let url = "http://localhost:4567/sendInvite"
+
         let options = {
             method: "POST",
             uri : url,
@@ -171,35 +239,33 @@ class Invite extends Component {
                     </form>
                     <br/>
                     <br/>
-                    <label>Sent</label>
+                    <label style ={{fontWeight: 'bold', fontSize: 20}}>Sent</label>
                     <table >
                         <thead>
                         <tr>
                             <th>Game ID</th>
                             <th>Player 1</th>
                             <th>Player 2</th>
-                            <th>Accepted</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {this.renderSent()}
+                            {this.renderSent()}
                         </tbody>
                     </table>
                     <br/>
                     <br/>
 
-                    <label>Pending</label>
+                    <label  style ={{fontWeight: 'bold', fontSize: 20}}>Pending</label>
                     <table >
                         <thead>
                         <tr>
                             <th>Game ID</th>
                             <th>Player 1</th>
                             <th>Player 2</th>
-                            <th>Accepted</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {this.renderPending()}
+                            {this.renderPending()}
                         </tbody>
                     </table>
 

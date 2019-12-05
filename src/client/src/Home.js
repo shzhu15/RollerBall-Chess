@@ -143,13 +143,8 @@ class Home extends Component {
                 <br/>
                 <br/>
                 <br/>
-                <header>
-                    <p style={{fontSize: "30px"}}>
-                        Home
-                    </p>
-                </header>
                 <h1>Hi {this.state.user}</h1>
-                <div className="Buttons" rowSpan = {true}>
+                <div className="Buttons" style={{display: 'inline-flex'}}>
                     <GameHistory
                         finishedGames={this.state.games.finished}
                     />
@@ -158,19 +153,13 @@ class Home extends Component {
                     <Invite
                         games={this.state.games.finished}
                     />
+                    <button><Link to="/">logout</Link></button>
                 </div>
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>
                 {boards}
                 </div>
-            <form>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <Link to="/">logout</Link>
-            </form>
+
             </div>
         );
     }
