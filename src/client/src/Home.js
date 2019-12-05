@@ -124,6 +124,8 @@ class Home extends Component {
                 <br/>
                 <br/>
                 <Link to="/">logout</Link>
+                <br/>
+                <Link to="/Unregister">unregister account</Link>
             </form>
             </div>
         );

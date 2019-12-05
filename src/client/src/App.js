@@ -6,6 +6,7 @@ import Register from './Register';
 import Home from './Home';
 import {PrivateRoute} from './PrivateRoute';
 import { history } from './History';
+import Unregister from "./Unregister";
 
 
 
@@ -50,6 +51,7 @@ export default class App extends Component {
                         <Route path="/Login" render={(props) => <Login {...props} updateUser={this.updateUser} user={this.state.userID} />}/>
                         <Route path="/Register" component={Register}/>
                         <PrivateRoute exact path="/Home" component={Home} wasInitialized={this.state.wasInitialized} user={this.state.userID}/>
+                        <PrivateRoute exact path="/Unregister" component={Unregister} wasInitialized={this.state.wasInitialized} user={this.state.userID}/>
                     </Switch>
                 </Router>
                 <br/>
