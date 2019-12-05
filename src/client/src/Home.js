@@ -5,6 +5,8 @@ import Board from "./Board";
 import MoveSubmission from "./MoveSubmission";
 import GameHistory from "./GameHistory";
 import Cookies from "./Cookies";
+import Invite from "./Invite";
+
 
 
 class Home extends Component {
@@ -27,7 +29,7 @@ class Home extends Component {
         this.closeModal = this.closeModal.bind(this)
         this.getUser();
         this.getGames();
-        this.makeBoards()
+        this.makeBoards();
 
 
     }
@@ -72,11 +74,13 @@ class Home extends Component {
         };
         const self = this;
         request.post(options, function (error, response, body) {
-            console.log('error:', error);
-            console.log('statusCode:', response && response.statusCode);
-            console.log('body:', JSON.parse(body));
-            console.log('Retrieved game');
-            self.setState({games: JSON.parse(body)});
+            if(body != undefined) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', JSON.parse(body));
+                console.log('Retrieved game');
+                self.setState({games: JSON.parse(body)});
+            }
         });
     }
 
@@ -85,6 +89,8 @@ class Home extends Component {
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
                 this.state.games.sent.forEach((game) => {
+                    boards.push(<br/>);
+                    boards.push("Game ID:  " + game.id);
                     boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
                     boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
@@ -95,6 +101,8 @@ class Home extends Component {
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
                 this.state.games.pending.forEach((game) => {
+                    boards.push(<br/>);
+                    boards.push("Game ID:  " + game.id);
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
                         );
@@ -106,6 +114,8 @@ class Home extends Component {
         if(this.state.games.active){
             if(this.state.games.active[0]){
                 this.state.games.active.forEach((game) => {
+                    boards.push(<br/>);
+                    boards.push("Game ID:  " + game.id);
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
                         );
@@ -124,11 +134,13 @@ class Home extends Component {
         this.setState({modalIsOpen:false})
     }
 
+
     render() {
         const boards = this.makeBoards();
         console.log("-------games from Home -------------")
         console.log(this.state.games.finished)
         console.log("-------end games from Home -------------")
+
         return (
 
             <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
@@ -137,29 +149,26 @@ class Home extends Component {
                 <br/>
                 <br/>
                 <br/>
-                <header>
-                    <p style={{fontSize: "30px"}}>
-                        Home
-                    </p>
-                </header>
                 <h1>Hi {this.state.user}</h1>
-                <GameHistory
-                    finishedGames={this.state.games.finished}
-                />
+                <div className="Buttons" style={{display: 'inline-flex'}}>
+                    <GameHistory
+                        finishedGames={this.state.games.finished}
+                    />
+                    <br/>
+
+                    <Invite
+                        games={this.state.games.finished}
+                    />
+                    <button><Link to="/">logout</Link></button>
+                </div>
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>
                 {boards}
                 </div>
-            <form>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <Link to="/">logout</Link>
-            </form>
+
             </div>
         );
     }
 }
+
 export default withRouter(Home);
