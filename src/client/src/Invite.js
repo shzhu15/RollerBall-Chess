@@ -16,7 +16,7 @@ class Invite extends Component {
             invite: '',
             error: '',
             games: '',
-
+            serverAddr: this.getServerAddr(),
         };
 
         this.openModal = this.openModal.bind(this);
@@ -26,6 +26,8 @@ class Invite extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderPending = this.renderPending.bind(this);
         this.renderSent = this.renderSent.bind(this);
+        this.handleReject = this.handleReject.bind(this);
+        this.handleAccept = this.handleAccept.bind(this);
 
 
 
@@ -55,8 +57,8 @@ class Invite extends Component {
         const rqt = {
             "email" : email,
         };
-        // let url = this.state.serverAddr + "getGame"
-        let url = "http://localhost:4567/getGame"
+        let url = this.state.serverAddr + "getGame"
+        // let url = "http://localhost:4567/getGame"
 
         let options = {
             method: "GET",
@@ -108,7 +110,23 @@ class Invite extends Component {
             return (
                 <tr key={id}>
                     <td>{id}</td>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
                     <td>{p1}</td>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
                     <td>{p2}</td>
                 </tr>
             )
@@ -119,55 +137,84 @@ class Invite extends Component {
 
         return this.state.gamesPending.map((data, index) => {
             const {id, p1, p2} = data //destructuring
-            function handleClick1(e) {
-                e.preventDefault();
-                console.log('The button was clicked.');
-                // let url = this.state.serverAddr + "acceptInvite"
-                let url = "http://localhost:4567/acceptInvite"
-                let options = {
-                    method: "POST",
-                    uri: url,
-                    body: JSON.stringify({id}),
-                    insecure: true,
-                };
-                request.post(options, function (error, response, body) {
-                    if(body != undefined) {
-                        console.log('error:', error);
-                        console.log('statusCode:', response && response.statusCode);
-                        console.log('body:', JSON.parse(body));
-                        console.log('START game');
-                    }
-                });
-            }
-            function handleClick2(e) {
-                e.preventDefault();
-                console.log('The button was clicked.');
-                let url = this.state.serverAddr + "acceptInvite"
-                let options = {
-                    method: "POST",
-                    uri: url,
-                    body: JSON.stringify({id}),
-                    insecure: true,
-                };
-                request.post(options, function (error, response, body) {
-                    if(body != undefined) {
-                        console.log('error:', error);
-                        console.log('statusCode:', response && response.statusCode);
-                        console.log('body:', JSON.parse(body));
-                        console.log('Retrieved game');
-                    }
-                });
-            }
             return (
                 <tr key={id}>
                     <td>{id}</td>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
                     <td>{p1}</td>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
                     <td>{p2}</td>
-                    <button onClick={handleClick1}>Accept</button>
-                    <button onClick={handleClick2}>Reject</button>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <th className="space"></th>
+                    <button onClick={i => this.handleAccept(id)}>Accept</button>
+                    <button onClick={i => this.handleReject(id)}>Reject</button>
                 </tr>
             )
         })
+    }
+
+    handleReject(id) {
+        console.log('The button was clicked.');
+        let url = this.state.serverAddr + "acceptInvite"
+        let options = {
+            method: "POST",
+            uri: url,
+            body: JSON.stringify({id}),
+            insecure: true,
+        };
+        request.post(options, function (error, response, body) {
+            if(body != undefined) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', JSON.parse(body));
+                console.log('Retrieved game');
+            }
+        });
+    }
+
+    handleAccept(id) {
+        console.log('id: ', id);
+        const rqt = {
+            'id': JSON.stringify(id)
+        };
+         let url = this.state.serverAddr + "acceptInvite"
+        // let url = "http://localhost:4567/acceptInvite"
+        let options = {
+            method: "POST",
+            uri: url,
+            body: JSON.stringify(rqt),
+            insecure: true,
+        };
+        console.log('options: ', options);
+        const self = this;
+
+        request.post(options, function (error, response, body) {
+            if(body != undefined) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', JSON.parse(body));
+                console.log('START game');
+                self.updateGames();
+            }
+        });
     }
 
     handleInviteChange(event) {
@@ -192,8 +239,8 @@ class Invite extends Component {
             "p1": email,
             "p2": this.state.invite
         };
-        // let url = this.state.serverAddr + "sendInvite"
-        let url = "http://localhost:4567/sendInvite"
+        let url = this.state.serverAddr + "sendInvite"
+        // let url = "http://localhost:4567/sendInvite"
 
         let options = {
             method: "POST",
@@ -201,11 +248,14 @@ class Invite extends Component {
             body: JSON.stringify(rqt),
             insecure: true,
         };
+        const self = this;
+
         request.post(options, function (error, response, body) {
             if(body != undefined) {
                 console.log('error:', error);
                 console.log('statusCode:', response && response.statusCode);
                 console.log('body:', JSON.parse(body));
+                self.updateGames();
             }
         });
     }
@@ -244,7 +294,23 @@ class Invite extends Component {
                         <thead>
                         <tr>
                             <th>Game ID</th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
                             <th>Player 1</th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
                             <th>Player 2</th>
                         </tr>
                         </thead>
@@ -260,7 +326,23 @@ class Invite extends Component {
                         <thead>
                         <tr>
                             <th>Game ID</th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
                             <th>Player 1</th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
+                            <th className="space"></th>
                             <th>Player 2</th>
                         </tr>
                         </thead>
