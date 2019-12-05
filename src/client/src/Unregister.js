@@ -28,11 +28,11 @@ class Unregister extends Component {
     }
 
     getUser() {
-        if(Cookies.readCookie('user') != null){
-            this.setState({user: Cookies.readCookie('user')})
+        if(Cookies.readCookie('email') != null){
+            this.setState({email: Cookies.readCookie('email')})
         }
         else{
-            this.setState({user: "alex"})
+            this.setState({email: "alex"})
         }
         //localStorage.getItem("email") ? this.setState({email: localStorage.getItem("email")}) : this.setState({email: "alex@email.com"});
 
