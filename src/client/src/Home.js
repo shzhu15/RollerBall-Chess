@@ -3,6 +3,9 @@ import {Link, withRouter} from "react-router-dom";
 import request from 'request';
 import Board from "./Board";
 import MoveSubmission from "./MoveSubmission";
+import GameHistory from "./GameHistory";
+import Cookies from "./Cookies";
+
 
 class Home extends Component {
     constructor(props) {
@@ -13,14 +16,19 @@ class Home extends Component {
             password: '',
             error: '',
             games: '',
-            serverAddr: this.getServerAddr()
+            serverAddr: this.getServerAddr(),
+            modalIsOpen: false,
         };
 
         this.getUser = this.getUser.bind(this);
         this.getGames = this.getGames.bind(this);
         this.makeBoards = this.makeBoards.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this)
         this.getUser();
         this.getGames();
+        this.makeBoards()
+
 
     }
 
@@ -33,13 +41,25 @@ class Home extends Component {
     }
 
     getUser() {
-        localStorage.getItem("user") ? this.setState({user: localStorage.getItem("user")}) : this.setState({user: "alex"});
+        if(Cookies.readCookie('user') != null){
+            this.setState({user: Cookies.readCookie('user')})
+        }
+        else{
+            this.setState({user: "alex"})
+        }
+        // localStorage.getItem("user") ? this.setState({user: localStorage.getItem("user")}) : this.setState({user: "alex"});
 
     }
 
     getGames() {
         let email = localStorage.getItem("email");
-        localStorage.getItem("email") ? email = localStorage.getItem("email") : email = "alex@email.com";
+        // localStorage.getItem("email") ? email = localStorage.getItem("email") : email = "alex@email.com";
+        if(Cookies.readCookie('email') != null){
+            email = Cookies.readCookie('email')
+        }
+        else{
+            email = "alex@email.com"
+        }
         const rqt = {
             "email" : email,
         };
@@ -97,9 +117,20 @@ class Home extends Component {
         return boards;
     }
 
+    openModal(){
+        this.setState({modalIsOpen:true})
+    }
+    closeModal(){
+        this.setState({modalIsOpen:false})
+    }
+
     render() {
         const boards = this.makeBoards();
+        console.log("-------games from Home -------------")
+        console.log(this.state.games.finished)
+        console.log("-------end games from Home -------------")
         return (
+
             <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
                 <br/>
                 <br/>
@@ -112,7 +143,9 @@ class Home extends Component {
                     </p>
                 </header>
                 <h1>Hi {this.state.user}</h1>
-
+                <GameHistory
+                    finishedGames={this.state.games.finished}
+                />
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>
                 {boards}
