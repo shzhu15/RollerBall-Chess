@@ -5,6 +5,8 @@ import Board from "./Board";
 import MoveSubmission from "./MoveSubmission";
 import GameHistory from "./GameHistory";
 import Cookies from "./Cookies";
+import Invite from "./Invite";
+
 
 
 class Home extends Component {
@@ -27,7 +29,7 @@ class Home extends Component {
         this.closeModal = this.closeModal.bind(this)
         this.getUser();
         this.getGames();
-        this.makeBoards()
+        this.makeBoards();
 
 
     }
@@ -72,11 +74,13 @@ class Home extends Component {
         };
         const self = this;
         request.post(options, function (error, response, body) {
-            console.log('error:', error);
-            console.log('statusCode:', response && response.statusCode);
-            console.log('body:', JSON.parse(body));
-            console.log('Retrieved game');
-            self.setState({games: JSON.parse(body)});
+            if(body != undefined) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', JSON.parse(body));
+                console.log('Retrieved game');
+                self.setState({games: JSON.parse(body)});
+            }
         });
     }
 
@@ -124,11 +128,13 @@ class Home extends Component {
         this.setState({modalIsOpen:false})
     }
 
+
     render() {
         const boards = this.makeBoards();
         console.log("-------games from Home -------------")
         console.log(this.state.games.finished)
         console.log("-------end games from Home -------------")
+
         return (
 
             <div className="Home"style={{textAlignVertical: "center", textAlign: "center"}}>
@@ -143,9 +149,16 @@ class Home extends Component {
                     </p>
                 </header>
                 <h1>Hi {this.state.user}</h1>
-                <GameHistory
-                    finishedGames={this.state.games.finished}
-                />
+                <div className="Buttons" rowSpan = {true}>
+                    <GameHistory
+                        finishedGames={this.state.games.finished}
+                    />
+                    <br/>
+
+                    <Invite
+                        games={this.state.games.finished}
+                    />
+                </div>
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>
                 {boards}
@@ -162,4 +175,5 @@ class Home extends Component {
         );
     }
 }
+
 export default withRouter(Home);
