@@ -58,6 +58,7 @@ class Home extends Component {
         // localStorage.getItem("email") ? email = localStorage.getItem("email") : email = "alex@email.com";
         if(Cookies.readCookie('email') != null){
             email = Cookies.readCookie('email')
+            this.state.email = email;
         }
         else{
             email = "alex@email.com"
@@ -116,6 +117,32 @@ class Home extends Component {
                 this.state.games.active.forEach((game) => {
                     boards.push(<br/>);
                     boards.push("Game ID:  " + game.id);
+                    console.log("Here:" + game.p1);
+                    console.log("Here:" + this.state.email);
+                    if(game.p1 == this.state.email){
+                        boards.push(<br/>);
+                        boards.push("\nYou Are White");
+                        if(game.turn % 2 === 0){
+                            boards.push(<br/>);
+                            boards.push("It Is Your Turn!");
+                        }
+                        else{
+                            boards.push(<br/>);
+                            boards.push("It Is Not Your Turn");
+                        }
+                    }
+                    else{
+                        boards.push(<br/>);
+                        boards.push("You Are Black");
+                        if(game.turn % 2 === 1){
+                            boards.push(<br/>);
+                            boards.push("It Is Your Turn!");
+                        }
+                        else{
+                            boards.push(<br/>);
+                            boards.push("It Is Not Your Turn");
+                        }
+                    }
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
                         );

@@ -53,9 +53,33 @@ public abstract class Piece {
         return pieceColor;
     }
 
-    public boolean move(Point newPosition){
+    public boolean isTurnOfPiece(int turn){
+        if(turn < 0){
+            return true;
+        }
+        if(turn % 2 == 0){
+            if(this.getPieceColor() == PieceColor.WHITE){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+            if(this.getPieceColor() == PieceColor.BLACK){
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+
+    public boolean move(Point newPosition, int turn){
+        // Return False If Not This Pieces Turn
+        if(!isTurnOfPiece(turn)){
+            return false;
+        }
         if(!this.getPossibleMoves().contains(newPosition)){
-            System.out.println(type + "cannot be moved to " + newPosition);
+            //System.out.println(type + "cannot be moved to " + newPosition);
             return false;
         }
         this.location = newPosition;

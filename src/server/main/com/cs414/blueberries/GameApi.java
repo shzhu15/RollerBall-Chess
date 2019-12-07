@@ -33,7 +33,7 @@ public class GameApi {
         // Register new player
         post("/register", (req, res) -> {
             Gson gson = new Gson();
-            System.out.println(req.body());
+            //System.out.println(req.body());
             Player player = gson.fromJson(req.body(), Player.class);
             System.out.println("Registering new player: " + player.toString());
             return player.register();
@@ -50,7 +50,7 @@ public class GameApi {
 
         // Log in player
         post("/login", (req, res) -> {
-            System.out.println(req.body());
+            //System.out.println(req.body());
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
             Player player = GlobalData.players.get(body.get("email"));
             if (player != null) {
@@ -61,7 +61,7 @@ public class GameApi {
 
         // Send an updated board
         post("/game", (req, res) -> {
-           System.out.println(req.body());
+           //System.out.println(req.body());
            Gson gson = new Gson();
            Game game = gson.fromJson(req.body(), Game.class);
            if (game != null) {
@@ -74,7 +74,7 @@ public class GameApi {
         // Get all games that a player is a part of
         post("/getGame", (req, res) -> {
             Gson gson = new Gson();
-            System.out.println(req.body());
+            //System.out.println(req.body());
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
 
             HashMap<String, ArrayList<Game>> gamesMap = new HashMap<>();
@@ -90,13 +90,16 @@ public class GameApi {
                     if (game.getP2().equals(body.get("email"))) gamesMap.get("pending").add(game);
                 }
                 else if (game.ready && !game.finished){
-                    gamesMap.get("active").add(game);
+                    if(game.getP1().equals(body.get("email"))) gamesMap.get("active").add(game);
+                    if(game.getP2().equals(body.get("email"))) gamesMap.get("active").add(game);
+
                 }
                 else{
-                    gamesMap.get("finished").add(game);
+                    if(game.getP1().equals(body.get("emaill"))) gamesMap.get("finished").add(game);
+                    if(game.getP2().equals(body.get("emaill"))) gamesMap.get("finished").add(game);
                 }
             });
-            System.out.println("Sending games for "+body.get("email"));
+            //System.out.println("Sending games for "+body.get("email"));
             return gson.toJson(gamesMap);
         });
 
@@ -110,40 +113,40 @@ public class GameApi {
         });
 
         post("/sendInvite", (req, res) -> {
-           System.out.println(req.body());
+           //System.out.println(req.body());
            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
            Game game = new Game((String) body.get("p1"), (String) body.get("p2"));
-           game.finished = true;
-           game.setEndTimeToNow();
             GlobalData.games.put(game.getId(), game);
            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
            return "Game created: " + game.toString();
         });
 
-        post("/move/:oldX/:oldY/:newX/:newY", (req, res) -> {
+        post("/move", (req, res) -> {
             Gson gson = new Gson();
-            GameIdDeserializer gameid = gson.fromJson(req.body(), GameIdDeserializer.class);
-            if(gameid != null){
-                Game serverInstanceOfGameObject = GlobalData.games.get(gameid.getId());
+            //System.out.println(req.body());
+            MoveApiDeserializer moveData = gson.fromJson(req.body(), MoveApiDeserializer.class);
+            if(moveData != null){
+                Game serverInstanceOfGameObject = GlobalData.games.get(moveData.getId());
+                if(!serverInstanceOfGameObject.isTurnOfPlayer(moveData.getPlayer())){
+                    return "Move Not Made, Not That Player's Turn";
+                }
                 // Gets the piece by parsing the req parameters. Assumes Integer
-                Point oldPosition = new Point(Integer.parseInt(req.params(":oldX")), Integer.parseInt(req.params(":oldY")));
-                Point newPosition = new Point(Integer.parseInt(req.params(":newX")), Integer.parseInt(req.params(":newY")));
-                System.out.println(newPosition);
+                Point oldPosition = new Point(moveData.getOldX(), moveData.getOldY());
+                Point newPosition = new Point(moveData.getNewX(), moveData.getNewY());
                 Piece piece = serverInstanceOfGameObject.getBoard().getPieceAtPoint(oldPosition);
                 if(piece.equals(null)){
-                    return "No peice at position " + req.params(":oldX") + ", " + req.params(":oldY");
+                    return "No peice at position " + moveData.getOldX() + ", " + moveData.getOldY();
                 }
                 piece.updateMoves();
-                boolean response = serverInstanceOfGameObject.getBoard().movePiece(piece, newPosition);
+                boolean response = serverInstanceOfGameObject.getBoard().movePiece(piece, newPosition, serverInstanceOfGameObject.getTurn());
                 if(!response){
-                    System.out.println("Not a valid move");
                     return gson.toJson("Piece Not Moved");
                 }
+                serverInstanceOfGameObject.incrementTurn();
             }
             // System.out.println(GlobalData.games.get(game.getId()));
             return "Piece Moved";
         });
-
     }
 
 }
