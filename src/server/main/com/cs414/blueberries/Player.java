@@ -36,6 +36,15 @@ public class Player {
         return true;
     }
 
+    public boolean Unregister() {
+        if (!GlobalData.players.containsKey(this.email)) return false;
+        GlobalData.players.remove(this.email);
+        GlobalData.writePlayers(GlobalData.PLAYERS_FILENAME);
+        System.out.println("Players file updated");
+        return true;
+    }
+
+
     public String buildLoginResponse(String password, JSONObject requestBody){
         if (password.equals(this.password)){
             requestBody.put("UserID", UserID);
