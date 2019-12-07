@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import request from "request";
+import Cookies from "./Cookies";
 
 class MoveSubmission extends React.Component {
     constructor(props) {
@@ -34,12 +35,18 @@ class MoveSubmission extends React.Component {
         const oldX = this.state.value[0];
         const oldY = this.state.value[2];
         const newX = this.state.value[4];
-        const newY = this.state.value[6]
+        const newY = this.state.value[6];
         const rqt = {
-            "id": this.state.id
+            "id": this.state.id,
+            "player": Cookies.readCookie("email"),
+            "oldX": oldX,
+            "oldY": oldY,
+            "newX": newX,
+            "newY": newY
+
         };
 
-        let url = this.state.serverAddr + 'move/' + oldX +"/" + oldY + "/" + newX + "/" + newY
+        let url = this.state.serverAddr + 'move'
         let options = {
             method: "POST",
             uri : url,

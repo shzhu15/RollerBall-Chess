@@ -121,7 +121,7 @@ public class King extends Piece {
             for (int j = 0; j < enemyPieces.size(); j++) {
                 if (ourPieces.get(i).getPossibleMoves().contains(enemyPieces.get(j).getLocation()) == true) {
                     Board newBoard = this.board;
-                    newBoard.movePiece(ourPieces.get(i), enemyPieces.get(j).getLocation());
+                    newBoard.movePiece(ourPieces.get(i), enemyPieces.get(j).getLocation(), -1);
                     if (isCheck(newBoard) == false) {
                         return false;
                     }
@@ -135,9 +135,9 @@ public class King extends Piece {
 //
 //                }
                 if (ourPieces.get(i).getPossibleMoves().contains(m) == true) {
-                    System.out.println("true : " + ourPieces.get(i).getType());
+                    //System.out.println("true : " + ourPieces.get(i).getType());
                     Board newBoard = this.board;
-                    newBoard.movePiece(ourPieces.get(i), m);
+                    newBoard.movePiece(ourPieces.get(i), m, -1);
                     if (isCheck(newBoard) == false) {
                         return false;
                     }

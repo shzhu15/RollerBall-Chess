@@ -143,11 +143,16 @@ Starts the current game (doens't have error checking currently)
 ```
 Returns success string
 
-## Move/oldX/oldY/newX/newY(POST)
-Moves the piece located at oldX/oldY to newX/newY. Doesn't currently check for all edgecases
+## Move(POST)
+Moves the piece located at oldX/oldY to newX/newY. Requires the name of the player so that people can't play for eachother
 ```
 {
     "id": 12345678
+    "newX": 1
+    "newY": 1
+    "oldX": 2
+    "oldY": 1
+    "player": "jared"
 }
 ```
 

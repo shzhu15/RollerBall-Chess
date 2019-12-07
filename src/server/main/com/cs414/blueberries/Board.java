@@ -46,9 +46,9 @@ public class Board {
     }
 
     //This should be called by the api whenever a player tries to make a move
-    public boolean movePiece(Piece piece, Point newPosition){
+    public boolean movePiece(Piece piece, Point newPosition, int turn){
         Piece pieceInSpace = this.getPieceAtPoint(newPosition);
-        if(piece.move(newPosition)){
+        if(piece.move(newPosition, turn)){
             if(pieceInSpace != null){
                 pieces.remove(pieceInSpace);
             }

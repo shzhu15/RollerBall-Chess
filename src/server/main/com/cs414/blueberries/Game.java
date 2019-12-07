@@ -6,8 +6,9 @@ import java.time.LocalDateTime;
 
 public class Game {
     private int id;
-    private String p1;
-    private String p2;
+    private int turn;
+    private String p1; // White
+    private String p2; // Black
     public boolean ready;
     public boolean finished;
     private Board board;
@@ -24,6 +25,7 @@ public class Game {
         this.startTime = "";
         this.endTime = "";
         this.Winner = "";
+        this.turn = 0;
         Random random = new Random();
         this.id = random.nextInt();
 
@@ -45,6 +47,37 @@ public class Game {
     public void setP1(String p1) {
         this.p1 = p1;
     }
+
+    public void incrementTurn(){this.turn++;}
+
+    public PieceColor getColorFromString(String playerName){
+        if(playerName.equals(p1)){
+            return PieceColor.WHITE;
+        }
+        else if(playerName.equals(p2)){
+            return PieceColor.BLACK;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public boolean isTurnOfPlayer(String player){
+        if(!this.p1.equals(player) && !this.p2.equals(player)){
+            //System.out.println("Player Not In Game");
+            return false;
+        }
+
+        if(this.turn % 2 == 0 && this.p1.equals(player)){
+            return true;
+        }
+        else if(this.turn % 2 == 1 && this.p2.equals(player)){
+            return true;
+        }
+        return false;
+    }
+
+    public int getTurn(){ return this.turn;}
 
     public String getP2() {
         return p2;
