@@ -36,6 +36,14 @@ public class Board {
         pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 5), this));
         pieces.add(new Pawn(PieceColor.WHITE, new Point(2, 6), this));
         pieces.add(new Bishop(PieceColor.WHITE, new Point(3, 6), this));
+
+        this.updateMoves();
+    }
+
+    public void updateMoves(){
+        for (Piece piece: this.pieces) {
+            piece.updateMoves();
+        }
     }
 
     //This should be called whenever the board gets read in

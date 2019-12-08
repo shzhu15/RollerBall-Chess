@@ -76,6 +76,7 @@ public class GameApi {
             gamesMap.put("finished", new ArrayList<>());
 
             GlobalData.games.forEach((id, game) -> {
+                game.getBoard().updateMoves();
                 if (!game.ready) {
                     if (game.getP1().equals(body.get("email"))) gamesMap.get("sent").add(game);
                     if (game.getP2().equals(body.get("email"))) gamesMap.get("pending").add(game);
@@ -134,9 +135,10 @@ public class GameApi {
                     return gson.toJson("Piece Not Moved");
                 }
                 serverInstanceOfGameObject.incrementTurn();
+                piece.updateMoves();
             }
             // System.out.println(GlobalData.games.get(game.getId()));
-            return "Piece Moved";
+            return gson.toJson("Piece Moved");
         });
     }
 

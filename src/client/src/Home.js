@@ -144,10 +144,9 @@ class Home extends Component {
                         }
                     }
                     boards.push(
-                        <Board id={game.id} pieces={game.board.pieces}/>
+                        <Board id={game.id} pieces={game.board.pieces} addr={this.state.serverAddr}/>
                         );
                     boards.push(<br/>);
-                    boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })
             }
         }
