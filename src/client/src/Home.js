@@ -91,9 +91,9 @@ class Home extends Component {
 
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
-
-                this.state.games.sent.forEach((game) => {
-                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+                //
+                // this.state.games.sent.forEach((game) => {
+                //     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
 
                 /*this.state.games.sent.forEach((game) => {
 
@@ -105,12 +105,13 @@ class Home extends Component {
 
                 })*/
             }
+
         }
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
 
-                this.state.games.pending.forEach((game) => {
-                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+                // this.state.games.pending.forEach((game) => {
+                //     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
 
                 /*this.state.games.pending.forEach((game) => {
 
@@ -134,8 +135,8 @@ class Home extends Component {
                     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
 
                    tabHeaders.push(<Tab>Game with {game.p1}</Tab>);
-                });
-                this.state.games.active.forEach((game) => {
+
+
                     boards = [];
 
                     boards.push(<br/>);
