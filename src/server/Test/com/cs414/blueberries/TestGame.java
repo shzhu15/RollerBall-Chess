@@ -13,7 +13,7 @@ public class TestGame {
         String p1 = "p1";
         String p2 = "p2";
 
-        Game game = new Game(p1, p2);
+        Game game = new Game(p1, p2, "1", "2");
         game.toString();
 
         assertEquals(false, game.ready);
