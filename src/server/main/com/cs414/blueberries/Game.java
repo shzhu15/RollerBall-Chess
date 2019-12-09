@@ -31,7 +31,7 @@ public class Game {
         this.Winner = "";
         this.turn = 0;
         Random random = new Random();
-        this.id = random.nextInt();
+        this.id = Math.abs(random.nextInt());
 
         this.board = new Board(this.id);
         this.board.initialize();

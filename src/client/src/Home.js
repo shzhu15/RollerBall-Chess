@@ -6,7 +6,8 @@ import MoveSubmission from "./MoveSubmission";
 import GameHistory from "./GameHistory";
 import Cookies from "./Cookies";
 import Invite from "./Invite";
-
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 
 class Home extends Component {
@@ -90,21 +91,29 @@ class Home extends Component {
 
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
+
                 this.state.games.sent.forEach((game) => {
                     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
+                /*this.state.games.sent.forEach((game) => {
+
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
                     boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
 
-                })
+                })*/
             }
         }
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
+
                 this.state.games.pending.forEach((game) => {
                     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
+                /*this.state.games.pending.forEach((game) => {
+
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     boards.push(
@@ -112,13 +121,23 @@ class Home extends Component {
                     );
                     boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
-                })
+                })*/
             }
         }
+        const tabFull = [];
         if(this.state.games.active){
             if(this.state.games.active[0]){
+                const tabHeaders = [];
+                const tabLists = [];
+
                 this.state.games.active.forEach((game) => {
                     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
+                   tabHeaders.push(<Tab>Game with {game.p1}</Tab>);
+                });
+                this.state.games.active.forEach((game) => {
+                    boards = [];
+
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     console.log("Here:" + game.p1);
@@ -151,10 +170,21 @@ class Home extends Component {
                         <Board id={game.id} pieces={game.board.pieces} addr={this.state.serverAddr}/>
                     );
                     boards.push(<br/>);
-                })
+                    tabLists.push(<TabPanel>
+                        {boards}
+                    </TabPanel>);
+                });
+                tabFull.push(<Tabs inkBarStyle={{background: 'blue'}}>
+                    <TabList>
+                        {tabHeaders}
+                    </TabList>
+                    {tabLists}
+                </Tabs>);
+                console.log(tabHeaders);
             }
         }
-        return boards;
+
+        return tabFull;
     }
 
     openModal(){
