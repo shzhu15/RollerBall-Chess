@@ -116,11 +116,11 @@ public class Board {
     }
 
     public static void main(String[] args){
-        Game b = new Game("p1", "p2");
-        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceSerializer()).create();
-        String json = gson.toJson(b);
-        System.out.println(json);
-        System.out.println(gson.fromJson(json, Game.class));
+//        Game b = new Game("p1", "p2");
+//        Gson gson = new GsonBuilder().registerTypeAdapter(Piece.class, new PieceSerializer()).create();
+//        String json = gson.toJson(b);
+//        System.out.println(json);
+//        System.out.println(gson.fromJson(json, Game.class));
 
     }
 

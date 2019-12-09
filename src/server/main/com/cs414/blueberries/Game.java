@@ -9,6 +9,8 @@ public class Game {
     private int turn;
     private String p1; // White
     private String p2; // Black
+    private String p1Name;
+    private String p2Name;
     public boolean ready;
     public boolean finished;
     private Board board;
@@ -17,9 +19,11 @@ public class Game {
     private String endTime;
 
 
-    public Game (String p1, String p2) {
+    public Game (String p1, String p2, String p1Name, String p2Name) {
         this.p1 = p1;
         this.p2 = p2;
+        this.p1Name = p1Name;
+        this.p2Name = p2Name;
         this.ready = false;
         this.finished = false;
         this.startTime = "";
@@ -76,6 +80,10 @@ public class Game {
         }
         return false;
     }
+
+    public String getP1Name(){return p1Name;};
+
+    public String getP2Name(){return p2Name;};
 
     public int getTurn(){ return this.turn;}
 

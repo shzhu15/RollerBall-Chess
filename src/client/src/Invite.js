@@ -106,7 +106,7 @@ class Invite extends Component {
     renderSent(){
 
         return this.state.gamesSent.map((data, index) => {
-            const {id, p1, p2} = data //destructuring
+            const {id, p1Name, p2Name} = data //destructuring
             return (
                 <tr key={id}>
                     <td>{id}</td>
@@ -114,7 +114,7 @@ class Invite extends Component {
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
-                    <td>{p1}</td>
+                    <td>{p1Name}</td>
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
@@ -127,7 +127,7 @@ class Invite extends Component {
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
-                    <td>{p2}</td>
+                    <td>{p2Name}</td>
                 </tr>
             )
         })
@@ -136,7 +136,7 @@ class Invite extends Component {
     renderPending(){
 
         return this.state.gamesPending.map((data, index) => {
-            const {id, p1, p2} = data //destructuring
+            const {id, p1Name, p2Name} = data //destructuring
             return (
                 <tr key={id}>
                     <td>{id}</td>
@@ -144,7 +144,7 @@ class Invite extends Component {
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
-                    <td>{p1}</td>
+                    <td>{p1Name}</td>
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
@@ -157,7 +157,7 @@ class Invite extends Component {
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
-                    <td>{p2}</td>
+                    <td>{p2Name}</td>
                     <th className="space"></th>
                     <th className="space"></th>
                     <th className="space"></th>
@@ -240,7 +240,7 @@ class Invite extends Component {
         }
         const rqt = {
             "p1": email,
-            "p2": this.state.invite
+            "p2Name": this.state.invite
         };
         let url = this.state.serverAddr + "sendInvite"
         // let url = "http://localhost:4567/sendInvite"

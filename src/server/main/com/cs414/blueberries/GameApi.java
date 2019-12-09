@@ -61,14 +61,14 @@ public class GameApi {
 
         // Send an updated board
         post("/game", (req, res) -> {
-           //System.out.println(req.body());
-           Gson gson = new Gson();
-           Game game = gson.fromJson(req.body(), Game.class);
-           if (game != null) {
-               GlobalData.games.put(game.getId(), game);
-               return "Board updated";
-           }
-           return "Board not found";
+            //System.out.println(req.body());
+            Gson gson = new Gson();
+            Game game = gson.fromJson(req.body(), Game.class);
+            if (game != null) {
+                GlobalData.games.put(game.getId(), game);
+                return "Board updated";
+            }
+            return "Board not found";
         });
 
         // Get all games that a player is a part of
@@ -96,8 +96,8 @@ public class GameApi {
 
                 }
                 else{
-                    if(game.getP1().equals(body.get("emaill"))) gamesMap.get("finished").add(game);
-                    if(game.getP2().equals(body.get("emaill"))) gamesMap.get("finished").add(game);
+                    if(game.getP1().equals(body.get("email"))) gamesMap.get("finished").add(game);
+                    if(game.getP2().equals(body.get("email"))) gamesMap.get("finished").add(game);
                 }
             });
             //System.out.println("Sending games for "+body.get("email"));
@@ -123,12 +123,20 @@ public class GameApi {
         });
 
         post("/sendInvite", (req, res) -> {
-           //System.out.println(req.body());
-           JSONObject body = (JSONObject) new JSONParser().parse(req.body());
-           Game game = new Game((String) body.get("p1"), (String) body.get("p2"));
+            //System.out.println(req.body());
+            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
+            String p1 = (String) body.get("p1");
+            String p2 = null;
+            String p2Name = (String) body.get("p2Name");
+            String p1Name = GlobalData.players.get(p1).getUserId();
+            for(String email : GlobalData.players.keySet()){
+                if(GlobalData.players.get(email).getUserId().equals(p2Name))
+                    p2 = email;
+            }
+            Game game = new Game(p1, p2, p1Name, p2Name);
             GlobalData.games.put(game.getId(), game);
-           GlobalData.writeGames(GlobalData.GAMES_FILENAME);
-           return "Game created: " + game.toString();
+            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
+            return "Game created: " + game.toString();
         });
 
         post("/move", (req, res) -> {

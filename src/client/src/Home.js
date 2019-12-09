@@ -88,26 +88,38 @@ class Home extends Component {
 
     makeBoards() {
         let boards = [];
+
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
+                //
+                // this.state.games.sent.forEach((game) => {
+                //     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
                 /*this.state.games.sent.forEach((game) => {
+
                     boards.push(<br/>);
-                    boards.push("Game ID:  " + game.id);
+                    boards.push("Versus:  " + name);
                     boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
                     boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
 
                 })*/
             }
+
         }
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
+
+                // this.state.games.pending.forEach((game) => {
+                //     let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
                 /*this.state.games.pending.forEach((game) => {
+
                     boards.push(<br/>);
-                    boards.push("Game ID:  " + game.id);
+                    boards.push("Versus:  " + name);
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
-                        );
+                    );
                     boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })*/
@@ -120,12 +132,15 @@ class Home extends Component {
                 const tabLists = [];
 
                 this.state.games.active.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
                    tabHeaders.push(<Tab>Game with {game.p1}</Tab>);
-                });
-                this.state.games.active.forEach((game) => {
+
+
                     boards = [];
+
                     boards.push(<br/>);
-                    boards.push("Game ID:  " + game.id);
+                    boards.push("Versus:  " + name);
                     console.log("Here:" + game.p1);
                     console.log("Here:" + this.state.email);
                     if(game.p1 == this.state.email){
@@ -154,7 +169,7 @@ class Home extends Component {
                     }
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces} addr={this.state.serverAddr}/>
-                        );
+                    );
                     boards.push(<br/>);
                     tabLists.push(<TabPanel>
                         {boards}
@@ -210,7 +225,7 @@ class Home extends Component {
                 </div>
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>
-                {boards}
+                    {boards}
                 </div>
 
             </div>

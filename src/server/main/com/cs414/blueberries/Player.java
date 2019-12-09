@@ -59,10 +59,12 @@ public class Player {
     }
 
     public boolean sendInvite (String senderId, String recipientId) {
-        Game game = new Game(senderId, recipientId);
-        GlobalData.games.put(game.getId(), game);
         Player p1 = GlobalData.players.get(senderId);
         Player p2 = GlobalData.players.get(recipientId);
+
+        Game game = new Game(senderId, recipientId, p1.getUserId(), p2.getUserId());
+        GlobalData.games.put(game.getId(), game);
+
         p1.getGameIDs().add(game.getId());
         p2.getGameIDs().add(game.getId());
         return true;
