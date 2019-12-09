@@ -276,8 +276,14 @@ class Invite extends Component {
                     <br/>
                     <br/>
 
-                    <form onSubmit={this.handleSubmit}>
+                    <label style={{textAlignVertical: "center", textAlign: "center", fontSize: 20 }}>
+                        Click update to update the screen after an action
+                    </label>
+                    <br/>
+                    <br/>
 
+
+                    <form onSubmit={this.handleSubmit}>
                         <label style={{textAlignVertical: "center", textAlign: "center", fontSize: 20 }}>
                             Send an Invitation
                             <br />
