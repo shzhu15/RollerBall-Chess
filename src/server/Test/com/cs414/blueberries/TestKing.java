@@ -148,8 +148,9 @@ public class TestKing {
         assertFalse("King can be saved", king.isCheckmate());
     }
 
-//    @Test
+    @Test
     public void testEscapableBlockCheckmate1(){
+        System.out.println("this is BLOCK---------------------------- ");
         Board board = new Board(69);
         King king = new King(PieceColor.WHITE, new Point(3, 1), board);
         king.updateMoves();
@@ -160,6 +161,34 @@ public class TestKing {
         board.placePiece(king);
         board.placePiece(rook);
         board.placePiece(savior);
+        rook.updateMoves();
+        savior.updateMoves();
+        king.updateMoves();
+
         assertFalse("King can be saved", king.isCheckmate());
+        System.out.println("this is BLOCK---------------------------- END");
+
+    }
+
+    @Test
+    public void testEscapableBlockCheckmate2(){
+        System.out.println("this is BLOCK2---------------------------- ");
+        Board board = new Board(69);
+        King king = new King(PieceColor.WHITE, new Point(3, 1), board);
+        king.updateMoves();
+        Rook savior = new Rook(PieceColor.WHITE, new Point(2, 1), board);
+        savior.updateMoves();
+        Rook rook = new Rook(PieceColor.BLACK, new Point(0, 1), board);
+        rook.updateMoves();
+        board.placePiece(king);
+        board.placePiece(rook);
+        board.placePiece(savior);
+        rook.updateMoves();
+        savior.updateMoves();
+        king.updateMoves();
+
+        assertFalse("King can be saved", king.isCheckmate());
+        System.out.println("this is BLOCK2---------------------------- END");
+
     }
 }

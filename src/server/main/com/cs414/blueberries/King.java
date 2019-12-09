@@ -40,6 +40,7 @@ public class King extends Piece {
     public void moveSet(Point point) {
         //up
         move(point, 0, -1);
+        System.out.println("enemy moves: " + board.getAllMovesOfColor(PieceColor.BLACK));
 
         //down
         move(point, 0, 1);
@@ -70,6 +71,7 @@ public class King extends Piece {
         newLocation.move(newLocation.x + x, newLocation.y + y);
 
         Piece piece = this.board.getPieceAtPoint(newLocation);
+//        piece.updateMoves();
         //check if location is out of bounds or not
         if(this.isValidLocation(newLocation) == true) {
             //if there is no piece or piece of same color at the new location, process
@@ -129,16 +131,23 @@ public class King extends Piece {
             }
             //block
             for (Point m : enemyMoves) {
-//                System.out.println("enemy point: " + m.x + ", " + m.y);
+                System.out.println("m: " + m);
+
+//                System.out.println("enemyMoveALL: " + enemyMoves);
 //                for(Point f : ourPieces.get(i).getPossibleMoves()) {
 //                    System.out.println("friendly point: " + f.x + ", " + f.y);
 //
 //                }
-                if (ourPieces.get(i).getPossibleMoves().contains(m) == true) {
-                    //System.out.println("true : " + ourPieces.get(i).getType());
+                if (ourPieces.get(i).getPossibleMoves().contains(m) == true && ourPieces.get(i).getType() != PieceType.KING) {
+                    System.out.println("true : " + ourPieces.get(i).getType() + "  enemyMove: " + m);
                     Board newBoard = this.board;
                     newBoard.movePiece(ourPieces.get(i), m, -1);
+                    newBoard.updateMoves();
+                    System.out.println("new position : " + newBoard.getPieceAtPoint(m));
+                    System.out.println("new moves : " + newBoard.getAllMovesOfColor(PieceColor.BLACK));
+
                     if (isCheck(newBoard) == false) {
+                        System.out.println("is false");
                         return false;
                     }
                 }
