@@ -87,10 +87,10 @@ class Home extends Component {
 
     makeBoards() {
         let boards = [];
-        let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
                 this.state.games.sent.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
@@ -103,6 +103,7 @@ class Home extends Component {
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
                 this.state.games.pending.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     boards.push(
@@ -116,6 +117,7 @@ class Home extends Component {
         if(this.state.games.active){
             if(this.state.games.active[0]){
                 this.state.games.active.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     console.log("Here:" + game.p1);
