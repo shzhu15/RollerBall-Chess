@@ -87,10 +87,11 @@ class Home extends Component {
 
     makeBoards() {
         let boards = [];
-        let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
+
         if(this.state.games.sent){
             if(this.state.games.sent[0]){
                 this.state.games.sent.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     boards.push(<Board id={game.id} pieces={game.board.pieces}/>);
@@ -103,11 +104,12 @@ class Home extends Component {
         if(this.state.games.pending){
             if(this.state.games.pending[0]){
                 this.state.games.pending.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces}/>
-                        );
+                    );
                     boards.push(<br/>);
                     boards.push(<MoveSubmission getGames={this.getGames} id={game.id}/>);
                 })
@@ -116,6 +118,7 @@ class Home extends Component {
         if(this.state.games.active){
             if(this.state.games.active[0]){
                 this.state.games.active.forEach((game) => {
+                    let name = this.state.user != game.p2Name ? game.p2Name : game.p1Name;
                     boards.push(<br/>);
                     boards.push("Versus:  " + name);
                     console.log("Here:" + game.p1);
@@ -146,7 +149,7 @@ class Home extends Component {
                     }
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces} addr={this.state.serverAddr}/>
-                        );
+                    );
                     boards.push(<br/>);
                 })
             }
@@ -191,7 +194,7 @@ class Home extends Component {
                 </div>
                 <h5 style={{fontSize: "30px"}}>Here are your active games</h5>
                 <div style={{textAlignVertical: "left", textAlign: "left"}}>
-                {boards}
+                    {boards}
                 </div>
 
             </div>
