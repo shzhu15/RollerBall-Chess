@@ -113,6 +113,15 @@ public class GameApi {
             return "Invite accepted";
         });
 
+
+        post("/rejectInvite", (req, res) -> {
+
+            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
+            Game game = GlobalData.games.remove(Integer.parseInt((String) body.get("id")));
+            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
+            return "Invite rejected";
+        });
+
         post("/sendInvite", (req, res) -> {
            //System.out.println(req.body());
            JSONObject body = (JSONObject) new JSONParser().parse(req.body());

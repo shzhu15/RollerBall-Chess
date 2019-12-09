@@ -173,11 +173,14 @@ class Invite extends Component {
 
     handleReject(id) {
         console.log('The button was clicked.');
-        let url = this.state.serverAddr + "acceptInvite"
+        const rqt = {
+            'id': JSON.stringify(id)
+        };
+        let url = this.state.serverAddr + "rejectInvite"
         let options = {
             method: "POST",
             uri: url,
-            body: JSON.stringify({id}),
+            body: JSON.stringify(rqt),
             insecure: true,
         };
         request.post(options, function (error, response, body) {
@@ -185,13 +188,13 @@ class Invite extends Component {
                 console.log('error:', error);
                 console.log('statusCode:', response && response.statusCode);
                 console.log('body:', JSON.parse(body));
-                console.log('Retrieved game');
+                console.log('rejected game');
             }
         });
     }
 
     handleAccept(id) {
-        console.log('id: ', id);
+        // console.log('id: ', id);
         const rqt = {
             'id': JSON.stringify(id)
         };
@@ -203,7 +206,7 @@ class Invite extends Component {
             body: JSON.stringify(rqt),
             insecure: true,
         };
-        console.log('options: ', options);
+        // console.log('options: ', options);
         const self = this;
 
         request.post(options, function (error, response, body) {
