@@ -1,5 +1,5 @@
 # Weekly Snapshot of Tasks
-- For GitHub issue # reference, view the complete user story and task list [here]()
+- For GitHub issue # reference, view the complete user story and task list [here](https://github.com/hamjared/cs414-f19-001-Blueberries/blob/master/Sprints/Sprint%203/User%20Stories.md)
 
 
 |Week  |  Backlog                                |In Progress                    | Complete                                                                                |
