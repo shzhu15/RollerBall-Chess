@@ -19,4 +19,12 @@ cd ../..
 ```
 ./run_server.sh
 ./run_client.sh
+```
+
+#### 4. Run the client in hosted mode (so that it can be used outside of local host)
+  - First edit the file to contain the IP address and port number of the machine running the server
+  - Then run:
+  ```
+./run_client_hosted_server.sh
+```
 
