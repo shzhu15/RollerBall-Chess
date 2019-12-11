@@ -5,6 +5,7 @@ import Board from "./Board";
 import MoveSubmission from "./MoveSubmission";
 import GameHistory from "./GameHistory";
 import Cookies from "./Cookies";
+import Rules from "./Rules";
 import Invite from "./Invite";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -212,6 +213,7 @@ class Home extends Component {
                 <br/>
                 <h1>Hi {this.state.user}</h1>
                 <div className="Buttons" style={{display: 'inline-flex'}}>
+                    <Rules/>
                     <GameHistory
                         finishedGames={this.state.games.finished}
                     />
