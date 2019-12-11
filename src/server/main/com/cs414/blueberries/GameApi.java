@@ -104,6 +104,21 @@ public class GameApi {
             return gson.toJson(gamesMap);
         });
 
+        post("/sendForfeit", (req, res) -> {
+            System.out.println("got request for sendForfeit");
+            JSONObject body = (JSONObject) new JSONParser().parse(req.body());
+            Game game = GlobalData.games.get(Integer.parseInt((String) body.get("id")));
+            System.out.println("game set");
+            game.finished = true;
+            System.out.println("game finished");
+            game.setEndTimeToNow();
+            System.out.println("game end time set");
+            game.setWinner("winner");
+            System.out.println("set data done for sendForfeit");
+            GlobalData.writeGames(GlobalData.GAMES_FILENAME);
+            return "forfeit game";
+        });
+
         post("/acceptInvite", (req, res) -> {
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
             Game game = GlobalData.games.get(Integer.parseInt((String) body.get("id")));
@@ -115,7 +130,6 @@ public class GameApi {
 
 
         post("/rejectInvite", (req, res) -> {
-
             JSONObject body = (JSONObject) new JSONParser().parse(req.body());
             Game game = GlobalData.games.remove(Integer.parseInt((String) body.get("id")));
             GlobalData.writeGames(GlobalData.GAMES_FILENAME);

@@ -28,10 +28,10 @@ class Home extends Component {
         this.makeBoards = this.makeBoards.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this)
+        this.handleForfeit = this.handleForfeit.bind(this);
         this.getUser();
         this.getGames();
         this.makeBoards();
-
 
     }
 
@@ -82,6 +82,32 @@ class Home extends Component {
                 console.log('body:', JSON.parse(body));
                 console.log('Retrieved game');
                 self.setState({games: JSON.parse(body)});
+            }
+        });
+    }
+
+    handleForfeit(id) {
+        const rqt = {
+            "id": JSON.stringify(id)
+        };
+        let url = this.state.serverAddr + "sendForfeit"
+
+        let options = {
+            method: "POST",
+            uri : url,
+            body: JSON.stringify(rqt),
+            insecure: true,
+        };
+        console.log("HOME --- options: " , options)
+
+        const self = this;
+
+        request.post(options, function (error, response, body) {
+            if(body != undefined) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', JSON.parse(body));
+                self.updateGames();
             }
         });
     }
@@ -169,6 +195,10 @@ class Home extends Component {
                     }
                     boards.push(
                         <Board id={game.id} pieces={game.board.pieces} addr={this.state.serverAddr}/>
+                    );
+                    boards.push(<br/>);
+                        boards.push(
+                        <button onClick={id => this.handleForfeit(game.id)}>Forfeit</button>
                     );
                     boards.push(<br/>);
                     tabLists.push(<TabPanel>
